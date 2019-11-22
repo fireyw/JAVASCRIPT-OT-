@@ -74,6 +74,7 @@
       function t(){
           var aaa='111';
       }
+      t();
       console.log(aaa); //error 발생 function안은 지역변수
   
       for(var i=0;i<3;i++){

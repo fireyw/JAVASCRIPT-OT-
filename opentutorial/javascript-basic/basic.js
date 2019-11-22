@@ -1,14 +1,10 @@
-var i=5;
-
-function a(){
-    var i=10;
-    b();
+function t(){
+    aaa='111';
 }
+t();
+console.log(aaa); //error 발생 function안은 지역변수
 
-function b(){
-    console.log(i)  //1. 먼저 b라는 함수에 i 라는 변수가 있는지 찾는다 2. 전역변수에서 i 를 찾는다
-                    //즉 호출됬을때 변수를 찾는것이 아니라 함수가 선언된 시점의 변수룰 찾는다
-                    // 사용될때가 아니라 정의될 때의 변수를 찾는다
-};
-
-a();  //5 출력
+for(var i=0;i<3;i++){
+    var name='222'
+}
+console.log(name); //222 for문 안은 지역변수 아님
