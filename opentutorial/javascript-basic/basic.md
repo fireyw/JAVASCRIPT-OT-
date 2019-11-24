@@ -287,4 +287,172 @@ console.log(sum(1,2,3,4)); //* 자바스크립트는 매게변수에 유연해�
 ~~~
 * 인자: 함수 호출 시 전달되는 값 ex(call fun(a,b,c))
 * 매게변수: 함수 몸체부분에 전달되는 값 function(a,b)
-        
+
+## 17 함수의 호출
+
+* sum.apply ( .이후에 나오는 것은 '메소드:객체의 속성이 함수임' 를 뜻함)
+* 자바스크렙트에 내장된 함수가 있다
+* apply 함수
+  * fun.apply([thisObj[,argArray]])  
+     *  fun 가져다쓸 메소드
+     *  thisObj (선택 사항입니다) : 현재 객체로 사용될 객체
+     *  argArray : 함수에 전달될 인수 집합
+  ~~~
+  ex
+    sum.apply(o1); //o1이라는 객체의 속성처럼 인식 o1.sum()
+    sum.apply(o2); //o2이라는 객체의 속성처럼 인식 o2.sum()
+    ~~~
+    ~~~    
+    o1 = {val1:1, val2:2, val3:3}
+    o2 = {v1:10, v2:50, v3:100, v4:25}
+    function sum(){
+        var _sum = 0;
+        for(name in this){
+            _sum += this[name];
+        }
+        console.log(_sum);
+    }
+    (sum.apply(o1)) // 6  o1.sum()
+    (sum.apply(o2)) // 185 o2.sum() 
+    ~~~
+* call 함수
+    * fun.call([thisObj[, arg[, arg2[, ...]]]])
+        * fun 가져다쓸 메소드
+        * thisObj (선택 사항입니다) 현재 객체로 사용될 객체
+        * arg1, arg2, argN (선택 사항입니다) 메소드에 전달될 인수 목록
+    ~~~
+    function sum(t1,t2,t3){
+      console.log(t1+t2+t3);
+    }
+    sum.call(this,1,2,3);//sum(1,2,3) 동
+    
+    ~~~
+* call과 apply 의 차이
+    * call 메소드와 동일 하나, call 메소드는 인자 하나 하나를, apply는 인자 리스트를 전달합니다.
+    
+* call, apply 함수의 사용의 이유는 this를 제어하기 위해
+    ~~~
+    type ="zero";
+    var type1 = { type:"one" };
+    var type2 = { type:"two" };
+     
+    function getType() {
+        console.log(this.type);
+    }
+     
+    getType();
+    getType.call(this);
+    getType.call(type1);
+    getType.call(type2);
+    ~~~
+.
+
+* for in 과 for of 차이
+    * for …in 반복문
+        1. for in 반복문은 객체의 속성들을 반복하여 작업을 수행할 수 있음 모든 객체에서 사용이 가능   
+        2. for in 구문은 객체의 key 값에 접근할 수 있지만, value 값에 접근하는 방법은 제공하지 않음
+    ~~~       
+     ex)
+     var obj = {
+         a: 1, 
+         b: 2, 
+         c: 3
+     };
+     
+     for (var prop in obj) {
+         console.log(prop, obj[prop]); // a 1, b 2, c 3
+     }              
+    ~~~      
+    * for of 반복문
+        1. for of 반복문은 ES6에 추가된 새로운 컬렉션 전용 반복 구문. 
+           for of 구문을 사용하기 위해선 컬렉션 객체가 [Symbol.iterator] 속성을 가지고 있어야만 함
+        2. key 값이 아니라 값에 접근  
+    ~~~
+    var iterable = [10, 20, 30];
+    
+    for (var value of iterable) {
+      console.log(value); // 10, 20, 30
+    }
+    ~~~       
+## 18.객체 지향 프로그래밍
+* 객체
+    * state(상태)와 behave(행위)로 이루어진 객체
+    * 프로그래밍적으로 구체적으로 서로 연관되어있는 변수와 메소드들의 모임
+* 프로그램 개발 시 처음에는 그냥 개발하지만 시간이 지날수록 로직이 추가되면서 복잡해진다
+* 이럴 경우 각 기능들을 그룹핑(변수와 메소드)해서 관리하면 편리하기 때문에 나온 것 중 하나를 객체 지향이라고 한 
+* 재활용성할 수 있게 만드는게 객체지향의 목정중 하나
+
+
+
+* 설계
+    1. 현실을 프로그래밍으로 표현하는것
+    2. 사용자의 관심사를 알아야
+    3. 추상화: 복잡한 현실을 잘 담아내는
+    
+* 부품화
+    * 예전 컴퓨터는 화면 키보드 하나라고 고장 나면 다 바꿔야했다
+    * 이것을 각 기능별로 쪼개서 그룹화 시키는것이다
+    * 공통된 기능을 모으는 것도 일종의 부품
+    * 모니터 키보드 데스크탑 메모리로 각각 부품화 함
+    * 시대에 따라서 부품화는 계속 바뀐다 정답이 없다(ex: mac)    
+    * 메소드도 부품화의 한 예     
+
+* 폴더: 객체 , 폴더안의 파일: 변수, 메소드    
+* 은닉화 캡슐화
+    1. 제대로된 부품이라면 그것이 어떻게 만들었는지는 알 필요 없고 사용 방법만 알면 됨
+    2. 내부의 동작방법은 단단한 케이스(객체)에 숨기고 사용자에게 그 사용방법만 노출
+    3. 객체가 어떻게 생겼는진 알 필요 없고 어떻게 사용하는지를 알아야    
+* 인터페이스
+    1. 잘 만들어진 부품이라면 부품과 부품은 서로 교환할 수 있어야 함
+    2. 모니터와 데스크탑은 분리해서 다른곳에 사용 할 수 있다
+    3. 모니터의 hdmi 케이블을 인터페이스라고 할 수 있다
+    
+## 19. 객체지향- 생성자와 new
+* 자바스크립트
+    * prototype-based programming
+    * 객체지향과 비슷하면서 함수형 프로그래밍의 특징을 가지고 있다
+    * 처음엔 쉽지만 가면 갈수록 어려운 언어
+    
+
+* 객체
+    1. 서로 연관된 변수와 함수를 그루핑한 그릇    
+    2. 객체를 담을 수 있는 비어있는 상자 
+    3. 객체내의 변수가 값이면 property(속성), 함수면(메소드)
+    
+    
+* 객체지향 프로그래밍
+    1. 좋은 부품의 로직을 만드는    
+
+* 생성자
+    1. 자바에서 생성자는 class 내에 속해있지만 자바스크립트는 어디에도 속해있지 않는다 그냥 함수임
+    2. new를 붙이면 객체가 리턴된
+    
+    ~~~
+    function person(){
+      console.log("person 함수")
+    };
+    console.log(person); //function person 출력
+    
+    var p =new person(); 
+    console.log(p) ; //person 객체 출력
+    ~~~  
+
+* 공통영역 묶는 예제
+    ~~~
+    function Person(_name){
+      this.name=_name;
+      this.introduce = function(){  //공통영역
+        console.log('My name is ', this.name);
+      }
+    }
+    
+    var p1 = new Person('fireyw'); //생성자를 통해 초기화하면서 공통부분을 재사용함
+    console.log(p1.introduce());
+    
+    var p2 =new Person('dlwb');
+    console.log(p2.introduce());
+    ~~~    
+    
+    
+    
+    
