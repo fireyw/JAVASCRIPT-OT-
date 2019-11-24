@@ -452,7 +452,18 @@ console.log(sum(1,2,3,4)); //* 자바스크립트는 매게변수에 유연해�
     var p2 =new Person('dlwb');
     console.log(p2.introduce());
     ~~~    
-    
+## 20. 전역객체
+* 자바스크립의 모든 객체는 전역객체의 property 
+* 편의를 위해 window 객체 생략 가능(node에서는 global이 전역객체)
+~~~
+function func(){
+  console.log("func");
+}
+
+func();
+window.func();  //func는 window의 객체의 메소드 이
+~~~           
+          
     
     
     
