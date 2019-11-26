@@ -1,10 +1,20 @@
-function t(){
-    aaa='111';
-}
-t();
-console.log(aaa); //error 발생 function안은 지역변수
+var o={}
+var p={}
+function func(){
+    switch(this){
+        case o:
+            console.log("o");
+            break;
+        case p:
+            console.log("p");
+            break;
+        case window:
+            console.log("window");
+            break;
 
-for(var i=0;i<3;i++){
-    var name='222'
+    }
 }
-console.log(name); //222 for문 안은 지역변수 아님
+
+func();
+func.apply(o);
+func.apply(p);

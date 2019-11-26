@@ -291,7 +291,7 @@ console.log(sum(1,2,3,4)); //* 자바스크립트는 매게변수에 유연해�
 ## 17 함수의 호출
 
 * sum.apply ( .이후에 나오는 것은 '메소드:객체의 속성이 함수임' 를 뜻함)
-* 자바스크렙트에 내장된 함수가 있다
+* 자바스크렙트에 내장된 함수가 있다.
 * apply 함수
   * fun.apply([thisObj[,argArray]])  
      *  fun 가져다쓸 메소드
@@ -324,11 +324,11 @@ console.log(sum(1,2,3,4)); //* 자바스크립트는 매게변수에 유연해�
     function sum(t1,t2,t3){
       console.log(t1+t2+t3);
     }
-    sum.call(this,1,2,3);//sum(1,2,3) 동
+    sum.call(this,1,2,3);//sum(1,2,3) 동일
     
     ~~~
 * call과 apply 의 차이
-    * call 메소드와 동일 하나, call 메소드는 인자 하나 하나를, apply는 인자 리스트를 전달합니다.
+    * call 메소드는 인자 하나 하나를, apply는 인자 리스트를 전달합니다.
     
 * call, apply 함수의 사용의 이유는 this를 제어하기 위해
     ~~~
@@ -464,6 +464,94 @@ func();
 window.func();  //func는 window의 객체의 메소드 이
 ~~~           
           
+## 21. this    
+* this를 어떻게 호출하느냐에 따라서 this가 가리키는 대상이 달라짐(가변적)
+* 함수와 객체의 관계가 느슨한 자바스크립트에서 this 는 이 둘을 연결시켜주는 실질적인 연결점
+    ~~~
+    function func(){
+        console.log(this); //브라우저에서 실행하면 window 출력
+    }
+    func();
+    ~~~        
+* 메소드와 this
+    * 메소드의 this는 메소드가 소속되어있는 객체를 가르킨다
+    ~~~
+  var o = {
+      func : function(){
+          console.log(this)
+          if(o === this){
+              console.log("o=== this")
+          }
+      }
+  }
+  o.func(); //메소스가 소속되어있는 객체를 가르킨다
+  ~~~
+* 생성자와 this
+    * THIS는 생성자가 만든 객체를 가리킨다
+    ~~~
+  var funcThis = null;
+  
+  function Func(){
+      funcThis=this;
+  }
+  
+  var o1 = Func();  //앞에 window. 생략
+  console.log(funcThis);  //window 객체 출력
+  if(funcThis=== window){
+      console.log('window');
+  }
+  
+  var o2= new Func();   //o2 객체 생성
+                        //객체를 다 생성 한 후에 o2 변수에 할당이 됨
+                        //그러므로 func생성자 안에서 if(o2===window) 는 undefined 나옴
+  if(funcThis === o2){
+      console.log('o2');
+  }
     
-    
-    
+  ~~~  
+* 객체로서 함수**
+    * new Object, new Array 명령어를 안쓰고 {1,2,3} [a,b,c] 이렇게 객체 선언하는 것을 리터럴
+    * 리터럴
+        1. 어떠한 값을 명칭하는 것이 아니라 변수 및 상수에서 저장되는 '값 자체'
+        2. 변수나 상수가 메모리에 할당된 공간이라면 리터럴은 이 공간에 저장되는 값
+        3. 리터럴은 메모리 어딘가에 값이 변하지 않도록 저장되지만 이름은 없다
+        4. 즉 컴파일시 프로그램 내에 정의되어있는 그대로 정확히 해석되어야함
+        5. 데이터를 표현하는 방식
+    * 리터럴 표기법
+        1. 변수를 선언함과 동시에 값을 지정해주는 표기법
+        2. ex)var no=3; var obj={name:'kk'};
+        3. 코드가 짧아 자바스크립트 인터프리터의 해석분량도 줄어듬     
+    ~~~
+    var sum=function (x+y){return x+y;}  //함수 리터럴
+                                        //var o = {} 객체 리터럴
+                                        //var a = [1,2,3] 배열리터럴
+    sum(1,2);
+    var sum2 = new Function('x', 'y', 'return x+y;'); //이렇게해도 되지만 불편하다 그래서 나온게 literal
+      
+* apply 와 this
+    * apply를 통해 this 주입
+    * 보통은 객체에 메소드가 포함된다 하지만 스크립트에선 메소드가 객체를 선택할 수 있다
+    * __this는 변화무쌍하다__
+    ~~~
+  var o={}
+  var p={}
+  function func(){
+      switch(this){
+          case o:
+              console.log("o");
+              break;
+          case p:
+              console.log("p");
+              break;
+          case window:
+              console.log("window");
+              break;
+  
+      }
+  }
+  
+  func();  //window
+  func.apply(o); //o 메소드가 객체 선택
+  func.apply(p); //p
+  ~~~
+        
