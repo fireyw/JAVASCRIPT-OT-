@@ -755,4 +755,4 @@ window.func();  //func는 window의 객체의 메소드 이
     var str2='coding2';
     str2.prop='test';
     console.log(str2.prop); //undefined 만든 객체를 제거하고 다시 원시데이터 타입으로 돌아간다
-
+    ~~~   
