@@ -684,7 +684,7 @@ window.func();  //func는 window의 객체의 메소드 이
     console.log(arr2.random());
     ~~~
 
-##24 객체지향: Object (다시 공부 필요)
+## 24 객체지향: Object (다시 공부 필요)
 * Object API 참고 
     * https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype
 * Object: 객체의 가장 기본적인 형태, 아무것도 상속받지 않은 순수한 객체
