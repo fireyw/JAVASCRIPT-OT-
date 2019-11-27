@@ -721,9 +721,10 @@ window.func();  //func는 window의 객체의 메소드 이
   var a = [1,2,3,4,5]
   console.log(a.contain(1));
     ~~~
+  
 * Object 확장의 위험
     * Object에 객체 추가시 Object를 상속하는 모든 객체에 영향을 미친다
-    * 
+     
     ~~~
   var o = {'korea':'seoul', 'japan':'tokyo', 'ame': 'washington'};
   console.log(o.contain('seoul'));
@@ -736,16 +737,18 @@ window.func();  //func는 window의 객체의 메소드 이
       }
   } 
     ~~~
-## 25. 원시 데이터 타입과 객체  
-    * 원시 데이터 타입
-        1. null, undefined, String, number, boolean
-        2. 레퍼객체로는 String, Number, Boolean. null과 undefined는 레퍼 객체가 존재하지 않는다.
-        * wrapper 객체
-            * 원시데이터 타입을 임시로 객체로 만들고 다시 제거하여 원시데이터로 만든다
-            * 객체가 문자열 원시데이터 타입을 객체로 감싸고 있는다
-            * __.__ 
-                1. object access operator
-                2. 앞은 객체 , 즉 str은 객체 문자열은 wrapper 객체이다
+  
+
+##25. 원시 데이터 타입과 객체
+* 원시 데이터 타입
+    1. null, undefined, String, number, boolean
+    2. 레퍼객체로는 String, Number, Boolean. null과 undefined는 레퍼 객체가 존재하지 않는다.
+    * wrapper 객체
+        * 원시데이터 타입을 임시로 객체로 만들고 다시 제거하여 원시데이터로 만든다
+        * 객체가 문자열 원시데이터 타입을 객체로 감싸고 있는다
+        * . 
+            1. object access operator
+            2. 앞은 객체 , 즉 str은 객체 문자열은 wrapper 객체이다
     ~~~
     var str='coding';  //new String('coding') 인것처럼 자동으로 객체를 만든다(wrapper 객체)
     
@@ -755,4 +758,4 @@ window.func();  //func는 window의 객체의 메소드 이
     var str2='coding2';
     str2.prop='test';
     console.log(str2.prop); //undefined 만든 객체를 제거하고 다시 원시데이터 타입으로 돌아간다
-
+    ~~~    
