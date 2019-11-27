@@ -554,4 +554,205 @@ window.func();  //func는 window의 객체의 메소드 이
   func.apply(o); //o 메소드가 객체 선택
   func.apply(p); //p
   ~~~
-        
+## 22. 상속 
+* 상속방법: .prototype에 상속하고자 하는 객체를 new 로 할당시키면 상속된다  
+          ex)Programmer.protype = new Person();  
+             Designer.protype = new Programmer();                                  
+    ~~~
+    function Person(name){
+        this.name=name;
+    }
+    
+    Person.prototype.name=null;
+    
+    Person.prototype.introduce=function(){
+        return 'My name is '+ this.name;
+    }
+    
+    function Programmer(name){
+        this.name=name;
+    }
+    //프로그래머 객체
+    Programmer.prototype=new Person(); //Person 객체 상속
+    Programmer.prototype.coding = function(){
+        return "hello programmer";
+    }
+    
+    var p1 = new Programmer('egoing');//new를 통해 객체화
+    console.log(p1.introduce());
+    console.log(p1.coding());
+    
+    //디자이너객체
+    function Designer(name){
+        this.name=name;
+    }
+    
+    Designer.prototype=new Programmer(); //프로그래머 상속
+    Designer.prototype.design = function(){
+        return "hello designer";
+    }
+    var p2=new Designer("아람");
+    
+    console.log(p2.introduce());
+    console.log(p2.design());
+    ~~~    
+
+* prototype(원형) : 이것을 통해 상속
+    * 생성자
+        1. 기본적으로 함수
+        2. new 붙여서 호출할 경우 생성자 함수가 되고 객체를 리턴한다
+            * 이렇게 하는 이유는 우리가 원하는 함수나 변수가 객체를 만들었을때 세팅되기를 원해서다
+            ~~~
+           var o =new Sub();//생성자 함수 호출로 원하는 값 세팅
+           var o = {}; //아무값도 세팅 X
+    * prototype은 객체의 특수한 속성(property)이며 그 안에 어떤 객체가 들어가 있다.            
+        ~~~
+        Sub.prototype = new Super();
+        var o = new Sub(); //생성자 함수의 prototype에 저장되어있는 객체를 꺼내서 변수에 전달함
+    * 상속되는 속성과 메소드들은 각 객체가 아니라 객체의 생성자의 prototype이라는 속성에 정의      
+    * prototype Chain: prototype 서로 연결
+    ~~~
+      
+    function Ultra(){
+    }
+    Ultra.prototype.ultraProp= true;
+    
+    function Super(){
+    }
+    Super.prototype = new Ultra(); // ultra 를 상속하겠다
+    
+    function sub(){
+    }
+    sub.prototype = new Super();   // Super를 상속하겠다
+    
+    var o = new sub();             // sub를 상속하겠다
+    
+    console.log(o.ultraProp);     
+    ~~~
+  
+* prototype chain
+    * 생성자가 만든 객체에 직접 넣지말고 변수에 넣어도됨
+    * prototype 주의사항
+        1. 자식에게 일어나는 일이 의도치않게 부모에게 일어나게하면 안됨        
+    ~~~
+    function Ultra(){};  
+    Ultra.prototype.ultraProp=true;
+    
+    function Super(){};    
+    var t = new Super();    
+    t.ultraProp=4;
+    
+    Super.prototype=t;
+    
+    function Sub(){};    
+    Sub.prototype=new Super(); 
+    //Sub.prototype=Super.prototype(이렇게 사용 X, 각 객체의 prototype이 다를 경우 서로 값을 침범)
+    
+    var s = new Super();    
+    s.ultraProp=22; 
+    
+    Sub.prototype=s;    
+    var o = new Sub();    
+    console.log(o.ultraProp);   //o객체에 ultraProp 속성이 없으면 생성자의 프로토타입을 확인한다. 
+                                //뒤져서 ultraProp속성이 있는지 확인함
+## 23. 표준내장객체  (standard built in object)
+* 표준내장객체: 자바스크립트가 기본적으로 가지고 있는 객체
+    * Object, array, String, Fuction, String, Math, Boolean, Number, Date, RegExp
+    * 호스트 환경에서도 내장객체 제공됨
+* 사용자 정의객체: 개발자가 만드는 객체    
+
+* 배열
+    ~~~
+  var arr = ["a", "b", "c", "d"];
+  function indexFromArr(arr){
+      var t= Math.random();      
+      var index= Math.floor(arr.length*t); //Math.floor(크지 않은 정수 리턴)
+      return arr[index];
+  }  
+  console.log('value : ', indexFromArr(arr));      
+    ~~~    
+
+    * 프로토타입 예
+        * 어떤 종류의 객체에 공통적 기능을 추가할때 많이 사용
+        * 모든 Array 객체에 random 값을 가져오는 함수를 만들고 싶다
+    ~~~          
+    Array.prototype.random=function(){
+        var index= Math.floor(this.length*Math.random());  //this는 생성자가 만든 객체를 나타냄
+        return this[index];
+    }
+    var arr2=new Array('1','2','3');
+    console.log(arr2.random());
+    ~~~
+
+##24 객체지향: Object (다시 공부 필요)
+* Object API 참고 
+    * https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype
+* Object: 객체의 가장 기본적인 형태, 아무것도 상속받지 않은 순수한 객체
+    * 모든 객체가 Object를 가지고 있어 모든객체의 공통기능을 추가할때 Object.prototype 를 사용하면됨
+    ~~~
+  //Object.keys
+  var arr = ['a','b','cc'];
+  console.log(Object.keys(arr))  //object는 생성자 함수고 keys는 메소드
+                                 //Object.keys=function(){} 유사
+  
+  //Object.prototype.toString   -모든 객체들이 Object를 상속받아 사용하는 함수
+  var o = new Object();
+  console.log(o.toString());
+  
+  var a= new Array(1,2,3); //Array 객체도 Object 중 하나로 prototype.toString이라는 object의 
+                           //메소드를 상속받아 사용한다
+  console.log(a.toString())
+  ~~~
+* Object 확장
+    * 공통 함수 생성 예제
+    * JAVA의 CONTAIN 함수를 JAVASCRIPT에도 생성
+    ~~~
+  Object.prototype.contain = function(needle){
+      for(var name in this){
+          if(this[name] === needle) {            ////this 메소드가 소속된 객체
+              return true;
+          }
+      }
+      return false;
+  }
+  
+  var o = {'korea':'seoul', 'japan':'tokyo', 'amer': 'washington'};
+  console.log(o.contain('seoul')); //TRUE
+  var a = [1,2,3,4,5]
+  console.log(a.contain(1));
+    ~~~
+* Object 확장의 위험
+    * Object에 객체 추가시 Object를 상속하는 모든 객체에 영향을 미친다
+    * 
+    ~~~
+  var o = {'korea':'seoul', 'japan':'tokyo', 'ame': 'washington'};
+  console.log(o.contain('seoul'));
+  var a = [1,2,3,4,5]
+  console.log(a.contain(1));
+  
+  for(var name in o){
+      if(o.hasOwnProperty(name)){ //name이 a의 속성인지 확인하는 것
+          console.log(name); //korea japan amer contain(Object를 상속해서 Ojbect 만든함수까지 출력)
+      }
+  } 
+    ~~~
+## 25. 원시 데이터 타입과 객체  
+    * 원시 데이터 타입
+        1. null, undefined, String, number, boolean
+        2. 레퍼객체로는 String, Number, Boolean. null과 undefined는 레퍼 객체가 존재하지 않는다.
+        * wrapper 객체
+            * 원시데이터 타입을 임시로 객체로 만들고 다시 제거하여 원시데이터로 만든다
+            * 객체가 문자열 원시데이터 타입을 객체로 감싸고 있는다
+            * __.__ 
+                1. object access operator
+                2. 앞은 객체 , 즉 str은 객체 문자열은 wrapper 객체이다
+    ~~~
+    var str='coding';  //new String('coding') 인것처럼 자동으로 객체를 만든다(wrapper 객체)
+    
+    console.log(str.length);  //wrapper 객체로 만들기 때문에 객체 처럼 사용 할 수 있다.
+    console.log(str.charAt(0));
+    
+    var str2='coding2';
+    str2.prop='test';
+    console.log(str2.prop); //undefined 만든 객체를 제거하고 다시 원시데이터 타입으로 돌아간다
+
