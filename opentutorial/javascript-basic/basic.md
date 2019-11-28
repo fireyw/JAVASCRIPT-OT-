@@ -1,3 +1,5 @@
+## 생활코딩 참고 : https://opentutorials.org/course/743/6507
+
 ## 13. 유효범위
 * 함수: 자바스크립트에서 제일 중요한 내용
 
@@ -9,7 +11,7 @@
     var vscope= 'global';  //전역변수
     
     function fscope(){
-        var vscope='local'; //지역변수
+        var vscope='local'; /ㅅ/지역변수
         console.log(vscope);  //먼저 가장 가까운곳에서 vscopde를 찾고 없으면 멀리본다
     }
     
@@ -425,9 +427,30 @@ console.log(sum(1,2,3,4)); //* 자바스크립트는 매게변수에 유연해�
 
 * 생성자
     1. 자바에서 생성자는 class 내에 속해있지만 자바스크립트는 어디에도 속해있지 않는다 그냥 함수임
-    2. new를 붙이면 객체가 리턴된
-    
+    2. new를 붙이면 객체가 리턴됨
+    3. 생성자 호출시 new 를 붙이지 않으면 this가 전역객체(브라우저기준:window)를 가리키기 때문에   
+      생성자내에 this.member 와 같은걸 사용했을 경우 전역객체 member 라는 것이 생성됨        
     ~~~
+  ex1
+  // 생성자
+  function Coffee() {
+      this.tastes = 'dalcom';
+  }
+  
+  // 새로운 객체
+  var morning_coffee = new Coffee();
+  console.log(typeof morning_coffee);  // 'object'
+  console.log(morning_coffee.tastes);  // 'dalcom'
+  
+  // 안티 패턴
+  // 'new' 를 빼먹음
+  var no_Morning_coffee = Coffee();
+  console.log(typeof no_Morning_coffee);  // 'undefined'
+  console.log(window.tastes);  // '전역객체
+  ~~~
+   
+    ~~~
+  ex2
     function person(){
       console.log("person 함수")
     };
@@ -510,7 +533,7 @@ window.func();  //func는 window의 객체의 메소드 이
     
   ~~~  
 * 객체로서 함수**
-    * new Object, new Array 명령어를 안쓰고 {1,2,3} [a,b,c] 이렇게 객체 선언하는 것을 리터럴
+    * new Object, new Array 명령어를 안쓰고 {1,2,3} [a,b,c] 이렇게 객체 선언하는 것을 리터럴    
     * 리터럴
         1. 어떠한 값을 명칭하는 것이 아니라 변수 및 상수에서 저장되는 '값 자체'
         2. 변수나 상수가 메모리에 할당된 공간이라면 리터럴은 이 공간에 저장되는 값
@@ -519,15 +542,68 @@ window.func();  //func는 window의 객체의 메소드 이
         5. 데이터를 표현하는 방식
     * 리터럴 표기법
         1. 변수를 선언함과 동시에 값을 지정해주는 표기법
+            ~~~
+           var car = { goes : 'far'}; //리터럴 표기법 
+           // 다른 방법 - 내장 생성자 사용 
+           // 경고 : 이 방법은 안티패턴이다. 
+           var car = new Object(); 
+           car.goes = 'far';
+           ~~~
+           
         2. ex)var no=3; var obj={name:'kk'};
         3. 코드가 짧아 자바스크립트 인터프리터의 해석분량도 줄어듬     
-    ~~~
-    var sum=function (x+y){return x+y;}  //함수 리터럴
-                                        //var o = {} 객체 리터럴
-                                        //var a = [1,2,3] 배열리터럴
-    sum(1,2);
-    var sum2 = new Function('x', 'y', 'return x+y;'); //이렇게해도 되지만 불편하다 그래서 나온게 literal
+        ~~~
+        var sum=function (x+y){return x+y;}  //함수 리터럴
+                                            //var o = {} 객체 리터럴
+                                            //var a = [1,2,3] 배열리터럴
+        sum(1,2);
+        var sum2 = new Function('x', 'y', 'return x+y;'); //이렇게해도 되지만 불편하다 그래서 나온게 literal
+        ~~~
+      * Template literals
+        1. 내장된 표현식을 허용하는 문자열 리터럴
+        2. 템플릿 리터럴은 이중 따옴표 나 작은 따옴표 대신 백틱(` `) (grave accent) 을 이용
+       
+      * Expression interpolation(표현식 삽입법) :
+       
+          * es6 이전 코드 
+          ~~~
+          var a = 5;
+          var b = 10;
+          console.log("Fifteen is " + (a + b) + " and\nnot " + (2 * a + b) + ".");
+          // "Fifteen is 15 and
+          // not 20."   
+          ~~~   
+          * es6 로 간단히 변환
+          ~~~
+          var a = 5;
+          var b = 10;
+          console.log(`Fifteen is ${a + b} and
+          not ${2 * a + b}.`);
+          // "Fifteen is 15 and
+          // not 20."
+          ~~~
       
+      * 실습1 
+        * 문자열을 reverse 하는 함수가 정상적으로 실행되도록 고쳐주세요
+        
+      ~~~        
+        const o1 = {
+          name:'Julie',
+          greetBackwards: function(){    
+            function getReverseName(){
+              console.log('11',this);
+              let nameBackwards=''
+              for(let i=this.name.length-1;i>=0;i--){
+                nameBackwards+=this.name[i];
+              }
+              return nameBackwards;
+            }
+            console.log(`${getReverseName()} si eman ym, olleh`);
+          }
+        };
+        o1.greetBackwards();
+        ~~~      
+  
 * apply 와 this
     * apply를 통해 this 주입
     * 보통은 객체에 메소드가 포함된다 하지만 스크립트에선 메소드가 객체를 선택할 수 있다
@@ -759,4 +835,49 @@ window.func();  //func는 window의 객체의 메소드 이
     str2.prop='test';
     console.log(str2.prop); //undefined 만든 객체를 제거하고 다시 원시데이터 타입으로 돌아간다
 
-* 참조  
+* 참조
+    * 복제
+        * 원시데이터(string, number, boolean) 값을 대입          
+    ~~~
+    var a=1;
+    var b=a;
+    b=2;
+    console.log('a',a,'b',b)
+    ~~~
+    * 참조(원시데이터를 제외한 객체 대입) 
+        * 객체는 참조형 데이터
+        * 객체의 경우 값을 대입할 때 복제가 아니라 같은 곳을 가리키고 있는 참조임
+    ~~~
+    var a={'id': 1};
+    var b=a;
+    b.id=2;
+    console.log(a.id); //2 출력
+    ~~~
+        * 원시데이터는 값이 복제 되지만 객체는 값이 참조된다
+    ~~~
+    var a= 1; //숫자1 원시데이터에 의한 참조
+    var a={'id': 1};  //객체 즉 참조형 데이터
+    ~~~
+ 
+    * 함수
+        * 원시데이터 값을 넘겼을 때는 값이 복제됨
+        ~~~
+      var a = 1;
+      function func(b){  
+          b = 2; //원시데이터
+      }
+      func(a);
+      console.log(a); //1
+        ~~~
+        * 객체({}) 값을 넘겼을 땐 참조됨
+        ~~~
+      var a = {'id':1};
+      
+      function func(b){
+          b={'id':2}
+      }
+      
+      func(a)
+      console.log('a',a); //{'id':1}
+        ~~~            
+        * string number boolean 은 우리가 객체처럼 사용할 수 있지만 실제론 원시데이터타입이다(wrapper class)
