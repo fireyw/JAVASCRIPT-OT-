@@ -11,7 +11,7 @@
     var vscope= 'global';  //전역변수
     
     function fscope(){
-        var vscope='local'; /ㅅ/지역변수
+        var vscope='local'; //지역변수
         console.log(vscope);  //먼저 가장 가까운곳에서 vscopde를 찾고 없으면 멀리본다
     }
     
@@ -532,7 +532,7 @@ window.func();  //func는 window의 객체의 메소드 이
   }
     
   ~~~  
-* 객체로서 함수**
+* 객체로서 함수
     * new Object, new Array 명령어를 안쓰고 {1,2,3} [a,b,c] 이렇게 객체 선언하는 것을 리터럴    
     * 리터럴
         1. 어떠한 값을 명칭하는 것이 아니라 변수 및 상수에서 저장되는 '값 자체'
@@ -553,41 +553,42 @@ window.func();  //func는 window의 객체의 메소드 이
         2. ex)var no=3; var obj={name:'kk'};
         3. 코드가 짧아 자바스크립트 인터프리터의 해석분량도 줄어듬     
         ~~~
-        var sum=function (x+y){return x+y;}  //함수 리터럴
+        var sum=function (x,y){return x+y;}  //함수 리터럴
                                             //var o = {} 객체 리터럴
                                             //var a = [1,2,3] 배열리터럴
         sum(1,2);
         var sum2 = new Function('x', 'y', 'return x+y;'); //이렇게해도 되지만 불편하다 그래서 나온게 literal
         ~~~
-      * Template literals
-        1. 내장된 표현식을 허용하는 문자열 리터럴
-        2. 템플릿 리터럴은 이중 따옴표 나 작은 따옴표 대신 백틱(` `) (grave accent) 을 이용
-       
-      * Expression interpolation(표현식 삽입법) :
-       
-          * es6 이전 코드 
-          ~~~
-          var a = 5;
-          var b = 10;
-          console.log("Fifteen is " + (a + b) + " and\nnot " + (2 * a + b) + ".");
-          // "Fifteen is 15 and
-          // not 20."   
-          ~~~   
-          * es6 로 간단히 변환
-          ~~~
-          var a = 5;
-          var b = 10;
-          console.log(`Fifteen is ${a + b} and
-          not ${2 * a + b}.`);
-          // "Fifteen is 15 and
-          // not 20."
-          ~~~
+* es6 중요 문법      
+  * Template literals
+    1. 내장된 표현식을 허용하는 문자열 리터럴
+    2. 템플릿 리터럴은 이중 따옴표 나 작은 따옴표 대신 백틱(` `) (grave accent) 을 이용
+   
+  * Expression interpolation(표현식 삽입법) :
+   
+      * es6 이전 코드 
+      ~~~
+      var a = 5;
+      var b = 10;
+      console.log("Fifteen is " + (a + b) + " and\nnot " + (2 * a + b) + ".");
+      // "Fifteen is 15 and
+      // not 20."   
+      ~~~   
+      * es6 로 간단히 변환
+      ~~~
+      var a = 5;
+      var b = 10;
+      console.log(`Fifteen is ${a + b} and
+      not ${2 * a + b}.`);
+      // "Fifteen is 15 and
+      // not 20."
+      ~~~
       
       * 실습1 
         * 문자열을 reverse 하는 함수가 정상적으로 실행되도록 고쳐주세요
         
       ~~~        
-        const o1 = {
+        o1 = {
           name:'Julie',
           greetBackwards: function(){    
             function getReverseName(){
