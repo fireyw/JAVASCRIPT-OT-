@@ -684,7 +684,7 @@ window.func();  //func는 window의 객체의 메소드 이
     console.log(arr2.random());
     ~~~
 
-##24 객체지향: Object (다시 공부 필요)
+## 24 객체지향: Object (다시 공부 필요)
 * Object API 참고 
     * https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype
 * Object: 객체의 가장 기본적인 형태, 아무것도 상속받지 않은 순수한 객체
@@ -746,7 +746,7 @@ window.func();  //func는 window의 객체의 메소드 이
     * wrapper 객체
         * 원시데이터 타입을 임시로 객체로 만들고 다시 제거하여 원시데이터로 만든다
         * 객체가 문자열 원시데이터 타입을 객체로 감싸고 있는다
-        * . 
+        * __.__ 
             1. object access operator
             2. 앞은 객체 , 즉 str은 객체 문자열은 wrapper 객체이다
     ~~~
@@ -758,4 +758,3 @@ window.func();  //func는 window의 객체의 메소드 이
     var str2='coding2';
     str2.prop='test';
     console.log(str2.prop); //undefined 만든 객체를 제거하고 다시 원시데이터 타입으로 돌아간다
-    ~~~    
