@@ -1,8 +1,16 @@
-var str='coding';  //new String('coding') 인것처럼 자동으로 객체를 만든다(wrapper 객체)
-// wrapper 객체가 문자열 원시데이터 타입을 객체로 감싸고 있는다
-console.log(str.length); //. : object access operator, . 앞은 객체 , 즉 str은 객체 문자열은 객체이다
-console.log(str.charAt(0));
+// var a=1;
+// var b=a;
+// b=2;
+// console.log('a',a,'b',b)
 
-var str2='coding2';
-str2.prop='test';
-console.log(str2.prop); //undefined 만든 객체를 제거하고 다시 원시데이터 타입으로 돌아간다
+
+// var a={'id': 1};
+// var b=a;
+// // b.id=2;
+// b={'id': 2}; //새로운 객체 생성
+// console.log(a.id)
+
+//넣는 값이 객체({})인 경우 같은 곳을 참조하게 된다
+
+
+//string number boolean 은 우리가 객체처럼 사용할 수 있지만 실제론 원시데이터타입이다(wrapper class)
