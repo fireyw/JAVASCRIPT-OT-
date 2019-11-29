@@ -1,5 +1,94 @@
 ## 생활코딩 참고 : https://opentutorials.org/course/743/6507
 
+## 9. 함수
+* 함수: 하나의 로직을 __재사용__ 할 수 있도록 하는 것
+* 함수 형태    
+~~~
+function 함수명( [인자...[,인자]] ){
+   코드 내용
+   return 반환값
+}
+~~~
+* 함수 호출 방법: 함수명(인자);
+~~~
+function numbering(){
+    console.log(1)
+}
+
+console.log(numbering);  //[Function: numbering]
+numbering(); //함수 호출
+~~~
+* 함수의 효용성
+    * 함수가 없을경우 반복되는 로직이 수정된다면 전부다 수정해야한다
+    * 재사용성이 높아진다(좋은 부품 생성 가능)
+    * 유지 보수와 가독성에 좋다
+
+* 함수의 입력
+    * function machine: 입력에 따라 출력이 다른 것
+    * 매개변수(파라미터): 함수에서 값을 받는것(ex function msg('a'){} : a 매개변수)
+    * 인자(argument): 함수 호출시 전달되는 값(ex msg('ar'): ar 인자) 
+    * 입력값은 여러개가 되지만 출력 값은 1개
+    ~~~
+    function get_argument(arg){
+        return arg* 1000;
+    };
+    get_argument(1);
+    get_argument(2);
+    get_argument(3);
+  
+* 함수의 출력
+    * return '문구' 
+    ~~~
+    function msg(){
+        return 'This is yw'
+    }
+    ~~~
+* 함수를 정의하는 다른 방법
+    ~~~
+  numbering = function(){
+      i=0;
+      while(i<10){
+          console.log(i);
+          i+=1;
+      }
+  }
+  numbering();
+  ~~~    
+* 익명함수 즉시 호출 함수  
+    ~~~
+    (function(){
+        i=0;
+        while(i<10){
+            console.log(i);
+            i+=1;
+        }
+        console.log(111)
+    })();
+  ~~~
+  
+## 11. 객체(OBJECT)  
+* 객체
+    1. 데이터를 담는 그릇(컨테이너)
+    2. {'key':'value', 'key': 'value'}
+    3. 객체의 index는 문자이다(배열은 숫자)
+    4. 객체 생성 방법
+    ~~~
+    var grades = {'egoing':10, 'test':6, 'yw':100}; //선언과 동시에 초기화
+ 
+    var gg={};  //new Object
+    gg['a']=10;
+    gg['bb']=20;
+    console.log(gg)
+  
+    var gg={};  //new Object
+    gg['a']=10;
+    gg['bb']=20;
+    gg.bb100=30;
+    console.log(gg['bb'+'100']);
+  
+ 
+    ~~~
+  
 ## 13. 유효범위
 * 함수: 자바스크립트에서 제일 중요한 내용
 
@@ -258,12 +347,12 @@ for(var index in arr) {
 * 수정
 var arr = []
 for(var i =0;i<5;i++){
-    arr[i] = function(id) {
+    arr[i] = function(id) { //즉석함수 호출시 매게변수를 받아옴
                 return function () {
                     return id;  //여기서 i의 값은 외부변수의 값이 아니다 외부함수가 필요함
                                 //id를 통해 외부함수의 지역변수에 접근
                 }
-            }(i); //매게변수의 인자값
+            }(i); //즉석함수 실행시 인자값
 }
 
 for(var index in arr){

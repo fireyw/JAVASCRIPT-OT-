@@ -1,15 +1,10 @@
-const o = {
-    name:'Julie',
-    greetBackwards: function(){
-        function getReverseName(){
-            console.log('11',this);
-            let nameBackwards=''
-            for(let i=this.name.length-1;i>=0;i--){
-                nameBackwards+=this.name[i];
-            }
-            return nameBackwards;
-        }
-        console.log(`${getReverseName()} si eman ym, olleh`);
-    }
-};
-o.greetBackwards();
+var grades = {'egoing':10, 'test':6, 'yw':100};
+
+console.log(grades)
+
+var gg={};  //new Object
+gg['a']=10;
+gg['bb']=20;
+gg.bb100=30;
+console.log(gg['bb'+'100']);
+
