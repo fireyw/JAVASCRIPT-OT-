@@ -1,4 +1,4 @@
-## 웹 브라우져와 자바스크립트
+## 웹 브라우저와 자바스크립트
 * 강의 URL : https://opentutorials.org/course/1375
 
 * 오리엔테이션
@@ -64,7 +64,8 @@
         ~~~
           
     * window 객체(0~3번 모두 window)
-        * 모든 브라우저로부터 지원받으면 브라우저의 윈도우를 말함 즉 브라우저 전체를 담당         
+        * 모든 브라우저로부터 지원받으면 브라우저의 윈도우를 말함 즉 브라우저 전체를 담당
+        * 전역객체         
         0. prooperty
         1. DOM(document)
         2. BOM(navigator, screen, location, frames)
@@ -101,5 +102,66 @@
         }
     }
     ~~~              
-          
-          
+* location 객체: 문서(브라우저)의 주소정보 알아내기
+    * location.href, location.toString()
+    ~~~
+    location.href: "https://www.youtube.com/watch?time_continue=1&v=EBhtT9TGtqY&feature=emb_logo#hash"    
+    location.protocol: https:
+    location.host: www.youtube.com
+    location.port: 80
+    location.pathname: /watch
+    location.search: ?time_continue=1&v=EBhtT9TGtqY&feature=emb_logo
+    ~~~  
+
+    * url 변경하기
+    * location.href = "https://www.naver.com"
+    * 화면 새로고침
+        * location.reload      
+
+* Navagator 객체 : 브라우저 정보를 제공   
+    * 웹표준
+        1. netscape와 IE 전쟁 사이에서 개발자 불편함을 제거하고자 만들어짐
+        2. 크로스 브라우징이라는 이슈가 생김
+    * console.dir 
+        1. 객체의 속성을 보여준다. 객체의 경우 log보다 보기 더 편함
+        2. 아래 명령을 통해서 이 객체의 모든 프로퍼티를 열람
+    
+    * User-Agent: 웹 브라우저가 웹서버에 전달하는 정보
+    * 구형 브라우저에 사용하고자 하는 API가 없는 경우 아래와 같이 사용할 수 있다
+    ~~~
+    if (!Object.keys) {  //es5에 새로 등장한 것으로 구형브라우저에 없을 수 있다.
+      Object.keys = (function () {
+        'use strict';
+    ~~~
+
+* 창 제어  
+    * window.open : 새로운 창이 열림
+    * window.open('', '_self') : 현재 창에 열림
+    * window.open('', '_blank') : 새로운 창이 열림
+* 창 상호작용
+    ~~~
+  <!DOCTYPE html>
+  <html>
+  <body>
+  <input type="button" value="open" onclick="winopen();" />
+  <input type="text" onkeypress="winmessage(this.value)" />
+  <input type="button" value="close" onclick="winclose()" />
+  <script>
+      function winopen(){
+          win = window.open('demo2.html', 'ot', 'width=300px, height=500px'); //새로운 창의 윈도우 객체가 리턴된다
+      }
+      function winmessage(msg){
+          console.log('winmessage', msg)
+          win.document.getElementById('message').innerText=msg; //크롬에서는 cross browser policy 정책으로 실행 X
+      }
+      function winclose(){
+          win.close();
+      }
+  </script>
+  </body>
+  </html>
+  ~~~    
+* 보안 
+    * 도메인이 같아야 상호작용 할 수 있다.  
+    * 팝업
+        * 버튼클릭과 같은 사용자 행위를 통한 경우에는 팝업차단이 안걸리지만 화면 로딩과 동시에 팝업을 띄우는경우 브라우져 차단에 걸린다
