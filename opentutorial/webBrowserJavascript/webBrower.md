@@ -169,8 +169,69 @@
         * 버튼클릭과 같은 사용자 행위를 통한 경우에는 팝업차단이 안걸리지만 화면 로딩과 동시에 팝업을 띄우는경우 브라우져 차단에 걸린다
         
 ##1111111111111111111
+* Jquery 객체
+    1. jQuery 함수의 리턴값으로 jQuery 함수를 이용해서 선택한 엘리먼트들에 대해서 처리할 작업을 프로퍼티
+    2. let li =$('li); //$는 Jquery 함수를 나타낸다
+        1. element 객체를 리턴한다
+        2. li.css('color', 'red');//암시적으로 li를 반복문을 돌려서 실행한다 
+        3. li.css('color'); //뒤에 값이 없으면 현재 색상을 가져온다 rgb(255, 0, 0) 
+           단 li 태그가 많으면 첫번째 값을 가지고 옴
 
+* 엘리먼트 정보
+    * 유사배열이여서 배열과 같은 방법으로 값을 가져 올 수 있다
+    * Jquery 함수를 사용하려면 Jquery 객체를 리턴해야한다 $() 감싸야 함
+    ~~~
+    let li=$('li');
+    //li[0],li[1]
+    for(let i =0; i<li.length; i++){
+        console.log(li[i].constructor) 
+       //ƒ HTMLLIElement() { [native code] }
+       //Jquery 객체가 아니라 DOM 객체이다 
+       //li[i].css('color', 'red'); //불가능       
+       //$(li[i]).constructor.css('color','blue'); //Jquery 로 둘러 쌓여 가능
+    }  
 
+* Jquery Element Map    
+  ~~~
+  let li=$('li');
+  li.map(function(index, elem){
+      console.log(index, elem);  //li 수만큼 0 <li style=​"color:​ green;​">​html​</li>​
+      $(elem).css('color', 'green'); //dom객체를 Jquery 객체로 감싸줌
+  })
+  ~~~
+
+* Jquery 객체의 API
+    * [Jquery API](https://api.jquery.com)
+        
+* Element 객체
+    * let t = document.getElementById('active');  //HTMLELEMENT 리턴
+    * ELEMENT
+        1. HTMLELEMENT의 부모
+        2. DOM은 HTML만을 위한 것이 아니라 마크업 언어를 위한 것으로 SVG, HTML, XML 기타 등등 마크업 언어에서 사용
+    * HTMLELEMENT
+        1. Style 속성이 있음 
+    * ![element1](./image/element1.png)
+    * li부터 OBJECT까지 상속관계를 나타냄
+    * ![element2](./image/element2.png); 
+    * 특징
+        * 식별자: 문서내에서 특정한 엘리먼트를 식별하기 위한 용도로 사용되는 API
+            1.Element.classList
+            2.Element.className
+            3.Element.id
+            4.Element.tagName
+        * 조회: 엘리먼트의 하위 엘리먼트를 조회하는 API
+            1. Element.getElementsByClassName
+            2. Element.getElementsByTagName
+            3. Element.querySelector
+            4. Element.querySelectorAll
+        * 속성: 엘리먼트의 속성을 알아내고 변경하는 API
+            1. Element.getAttribute(name)
+            2. Element.setAttribute(name, value)
+            3. Element.hasAttribute(name);
+            4. Element.removeAttribute(name);
+            
+            
+##2222222222222222222
 * Node 객체         
     * Node 객체는 최상위 조상으로 모든 DOM은 Node를 상속받음
       
