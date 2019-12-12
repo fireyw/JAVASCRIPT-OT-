@@ -50,7 +50,9 @@
             )
         }
         ~~~
-* 객체
+* 객체  
+
+    ![OBJECT](image/Object_window.png)
     * 객체를 통해 브라우저를 제어 할 수 있다.
     * 객체는 웹브라우저가 제공하며 우리는 자바스크립트를 통해 제어함
     * getElementsByTagName : 태그를 찾아 배열을 리턴함        
@@ -165,3 +167,156 @@
     * 도메인이 같아야 상호작용 할 수 있다.  
     * 팝업
         * 버튼클릭과 같은 사용자 행위를 통한 경우에는 팝업차단이 안걸리지만 화면 로딩과 동시에 팝업을 띄우는경우 브라우져 차단에 걸린다
+        
+##1111111111111111111
+
+
+* Node 객체         
+    * Node 객체는 최상위 조상으로 모든 DOM은 Node를 상속받음
+      
+     ![node](./image/node.png)
+    * 객체의 관계를 정의 하는 API 존재
+        * 주의사항
+            1. html에서 줄 바꿈도 text 객체이다 (#text)
+            2. 줄바꿈을 무시하려면 start.firstElementChild 사용하면됨
+    ~~~
+    <body id="start">
+    <ul>
+        <li><a href="./532">html</a></li> 
+        <li><a href="./533">css</a></li>
+        <li><a href="./534">JavaScript</a>
+            <ul>
+                <li><a href="./535">JavaScript Core</a></li>
+                <li><a href="./536">DOM</a></li>
+                <li><a href="./537">BOM</a></li>
+            </ul>
+        </li>
+    </ul>
+    <script>
+    var s = document.getElementById('start');
+    console.log(1, s.firstChild); // #text
+    var ul = s.firstChild.nextSibling
+    console.log(2, ul); // ul
+    console.log(3, ul.nextSibling); // #text
+    console.log(4, ul.nextSibling.nextSibling); // script
+    console.log(5, ul.childNodes); //text, li, text, li, text, li, text
+    console.log(6, ul.childNodes[1]); // li(html)
+    console.log(7, ul.parentNode); // body
+    start.firstElementChild.style.color="red";
+    </script>
+  ~~~
+  
+* 노드 종류 API
+    * 각 노드별 노드 타입 key값이나 value로 요소 확인을 할 수 있다
+    ~~~
+  for(let name in Node){
+  	console.log(name);
+  };
+  key         value
+  ELEMENT_NODE 1 
+  ATTRIBUTE_NODE 2 
+  TEXT_NODE 3 
+  CDATA_SECTION_NODE 4 
+  ENTITY_REFERENCE_NODE 5 
+  ENTITY_NODE 6 
+  PROCESSING_INSTRUCTION_NODE 7 
+  COMMENT_NODE 8 
+  DOCUMENT_NODE 9 
+  DOCUMENT_TYPE_NODE 10 
+  DOCUMENT_FRAGMENT_NODE 11 
+  NOTATION_NODE 12 
+  DOCUMENT_POSITION_DISCONNECTED 1 
+  DOCUMENT_POSITION_PRECEDING 2 
+  DOCUMENT_POSITION_FOLLOWING 4 
+  DOCUMENT_POSITION_CONTAINS 8 
+  DOCUMENT_POSITION_CONTAINED_BY 16 
+  DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC 32
+    ~~~  
+  * 실행 예시
+    ~~~
+    let body=document.getElementById('start')
+    
+    body.nodeType
+    1 //ELEMENT_NODE
+    body.firstChild
+    #text
+    body.firstChild.nodeType
+    3 //TEXT_NODE
+    document.nodeType
+    9 //DOCUMENT_NODE
+    body.firstElementChild.nodeType===Node.ELEMENT_NODE //ul
+    true
+    body.nodeName
+    "BODY"
+    body.firstElementChild.nodeName
+    "UL"    
+    ~~~
+    
+* Node 의 종류 (재귀함수)
+    * [repl.it](https://repl.it/@fireyw/jsTest)
+    * 함수를 다른 함수의 인자로 전달
+    * CALLBACK 함수: 어떤 이벤트가 발생한 후, 수행될 함수를 의미
+    ~~~
+  <body id="start">
+  <ul>
+      <li><a href="./532">html</a></li> 
+      <li><a href="./533">css</a></li>
+      <li><a href="./534">JavaScript</a>
+          <ul>
+              <li><a href="./535">JavaScript Core</a></li>
+              <li><a href="./536">DOM</a></li>
+              <li><a href="./537">BOM</a></li>
+          </ul>
+      </li>
+  </ul>
+  <script>  
+  function traverse(target, callback){
+    if(target.nodeType===Node.ELEMENT_NODE){ //element 노드만 출력
+      callback(target);
+      let c = target.childNodes;
+      for(let i=0; i<c.length;i++){
+        traverse(c[i], callback);
+      }
+    }
+  }
+  traverse(document.getElementById('start'), function(elem){
+    console.log('traverse',elem.nodeName);
+    if(elem.nodeName==='A') 
+      elem.style.color="blue";
+  })
+  </script>
+  </body>
+  ~~~
+* 코드 작성 유의 사항
+    * 코드 어떻게 활용 될 것인가 고민(사용성, 인터페이스 중점(apple))
+    
+* 노드의 변경
+    * 노드를 추가 및 삭제   
+        추가할 element를 생성해야 하는데 이것은 document의 기능
+        1. 노드 추가
+            * appendChild(child)  
+              노드의 마지막 자식으로 주어진 엘리먼트 추가
+            * insertBefore(newElement, referenceElement)   
+              appendChild와 동작방법은 같으나 두번째 인자로 엘리먼트를 전달 했을 때 이것 앞에 엘리먼트가 추가된다.         
+        2. 노드 삭제 : removeChild(child)
+        3. 노드 교체 : replaceChild(newChild, oldChild)
+
+* Jquery 노드 변경 
+    * DOM 제어가 Jquery 의 주 목적 [Jquery API](https://api.jquery.com/)   
+     ![](./image/jQueryAPI1.png)
+    * before, after : 타겟의 형제로 추가
+    * prepend, append: 타겟의 자식으로 추가
+    * remove : 선택된 element 제거
+    * empty : 선택된 element의 노드를 제거
+
+* 문자열로 노드 제어    
+    * innerHtml: 자식의 요소를 가져옴, 수정시 자식만 변경
+    * outerHtml: 자신을 포함하고 자식 요소를 가져옴 , 수정시 자기까지 변경
+    * innerText: 태그를 제외한 문자열을 가져오고, 값을 변경할때 HTML 코드를 그대로 추가(자식만 변경됨)
+    * outerText: 태그를 제외한 문자열을 가져오고, 값을 변경할때 HTML 코드를 그대로 추가(부모까지 변경)
+    * insertAdjacentHTML: 좀 더 정교하게 노드 변경
+        1. beforebegin(동일) : 해당 태그와 같은 레벨 위쪽
+        2. afterbegin(자식)  : 해당 태그와 자식 레벨 중 가장 위쪽
+        3. beforend(자식)    : 해당 태그와 자식 라벨 중 가장 아래쪽
+        4. afterend(동일)    : 해당 태그와 같은 레벨 아래쪽
+              
