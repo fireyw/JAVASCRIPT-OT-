@@ -168,7 +168,7 @@
     * 팝업
         * 버튼클릭과 같은 사용자 행위를 통한 경우에는 팝업차단이 안걸리지만 화면 로딩과 동시에 팝업을 띄우는경우 브라우져 차단에 걸린다
         
-##1111111111111111111
+
 * Jquery 객체
     1. jQuery 함수의 리턴값으로 jQuery 함수를 이용해서 선택한 엘리먼트들에 대해서 처리할 작업을 프로퍼티
     2. let li =$('li); //$는 Jquery 함수를 나타낸다
@@ -229,9 +229,69 @@
             2. Element.setAttribute(name, value)
             3. Element.hasAttribute(name);
             4. Element.removeAttribute(name);
+
+* 식별자 API
+    * ELEMENT.TAGNAME(읽기전용)
+        1. HTMLLIELEMENT<-HTMLELEMENT<-ELEMENT 상속 관계를 통해 ELEMENT.TAGNAME 을 사용할 수 있다
+        2. TAGNAME은 변경 할 수 없다
+    * ELEMENT.id
+        1. ID는 단 한번만 등장할 수 있는 식별자        
+        2. getElementById로 요소를 가져온 후 x.id='deactive' 아이디를 변경 할 수 있다
+    * Element.className 
+        1. 사용하기 까다롭다
+        2. class는 자바스크립트의 예약어로 속성 className과 일치하지 않는 경우가 있다
+        3. 클래스 변경 시 기존의 내역을 확인해야하고 삭제 시 삭제하지 않을 것들의 class를 변경해야한다.
+    * Element.classList
+        1. classList는 DOMTOKEN으로 유사배열을 리턴한다
+        2. classList.add, classList.remove를 통해 class를 제어할 수 있다                       
+    ~~~
+  <body>
+      <ul>
+          <li>html</li>
+          <li>css</li>
+          <li id="active" class="important current">JavaScript</li>
+      </ul>
+  <script>
+      <!-- ELEMENT.TAGNAME-->
+      console.log(document.getElementById("active").tagName)// LI
+      <!-- ELEMENT.id-->
+      var active=document.getElementById('active');
+      console.log(active.id);
+      active.id='deactive';
+      console.log(deactive.id);
+      <!-- ELEMENT.className-->      
+      // class 값을 변경할 때는 프로퍼티의 이름으로 className을 사용한다.
+      active.className = "important current";
+      console.log(active.className);
+      // 클래스를 추가할 때는 아래와 같이 문자열의 더한다.
+      active.className += " readed"
+      <!-- ELEMENT.classList-->
+      console.log(active.classList);
+      //DOMTokenList(2) ["important", "current", value: "important current"]
+      for(let i=0; i<active.classList.length;i++){ //DOMToken 유사배열
+          console.log(active.classList[i])
+      }    
+  </script>
+  ~~~                
+* 조회 API
+    ~~~
+     var list = document.getElementsByClassName('marked');
+      console.group('document');
+      for(var i=0; i<list.length; i++){
+          console.log(list[i].textContent);
+      }
+      console.groupEnd();
+       
+      console.group('active');
+      var active = document.getElementById('active');     
+      var list = active.getElementsByClassName('marked');
+      for(var i=0; i<list.length; i++){
+          console.log(list[i].textContent);
+      }
+      console.groupEnd();
+   ~~~
             
             
-##2222222222222222222
 * Node 객체         
     * Node 객체는 최상위 조상으로 모든 DOM은 Node를 상속받음
       
