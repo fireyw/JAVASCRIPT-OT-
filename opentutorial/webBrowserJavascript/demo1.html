@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
 <body>
-    <ul>
-        <li>html</li>
-        <li>css</li>
-        <li id="active" class="important current">JavaScript</li>
-    </ul>
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+</ul>
+<ol>
+    <li>HTML</li>
+    <li class="active">CSS</li>
+    <li>JavaScript</li>
+</ol>
+
 <script>
-    console.log(document.getElementById("active").tagName)
-    var active=document.getElementById('active');
-    console.log(active.id);
-    active.id='deactive';
-    console.log(deactive.id);
+    // var li = document.querySelector('li');
+    // li.style.color='red';
+    // var li = document.querySelector('.active');
+    // li.style.color='blue';
+    var lli = document.getElementsByTagName('li');
+    for(let i = 0; i<lli.length;i++){
+        lli[0].style.color="blue";
+    }
 </script>
 </body>
-</head>
 </html>

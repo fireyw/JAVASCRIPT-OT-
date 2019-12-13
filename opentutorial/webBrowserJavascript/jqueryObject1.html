@@ -3,22 +3,30 @@
     <head>
 
     </head>
-    <body>
     <ul>
-        <li>html</li>
+        <li class="marked">html</li>
         <li>css</li>
-        <li>Javascript</li>
+        <li id="active">JavaScript
+            <ul>
+                <li>JavaScript Core</li>
+                <li class="marked">DOM</li>
+                <li class="marked">BOM</li>
+            </ul>
+        </li>
     </ul>
     <script
             src="https://code.jquery.com/jquery-1.12.4.js"
             integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
             crossorigin="anonymous"></script>
     <script>
-        let li=$('li');
-        li.map(function(index, elem){
-            console.log(index, elem);
-            $(elem).css('color', 'green');
-        })
+        //class가 marked를 먼저 찾은 후 id가 active인것을 찾는다
+        //$( ".marked", "#active").css( "background-color", "red" );
+        //$('#active .marked').css("background-color", "red");
+        //$('#active').find('.marked').css("background-color", "red");
+
+        //id가 active인 css먼저 적용 후 class가 .marked를 찾아 css 적용한다
+        $('#active').css("background-color", "blue").find('.marked').css("background-color", "yellow");
     </script>
+
     </body>
 </html>

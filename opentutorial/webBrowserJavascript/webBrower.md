@@ -167,8 +167,71 @@
     * 도메인이 같아야 상호작용 할 수 있다.  
     * 팝업
         * 버튼클릭과 같은 사용자 행위를 통한 경우에는 팝업차단이 안걸리지만 화면 로딩과 동시에 팝업을 띄우는경우 브라우져 차단에 걸린다
+      
+      
+* DOM 
+    * Document Object Model로 웹페이지를 자바스크립트로 제어하기 위한 객체 모델
+    * window 객체의 document 프로퍼티를 통해 사용 가능
         
-
+* 제어 대상을 찾기
+    * document.getElementsByTagName
+        1. let lis = document.getElementsByTagName('li'); //유사배열 리턴            
+        ~~~
+          var ul = document.getElementsByTagName('ul')[0]; 
+          var lis = ul.getElementsByTagName('li'); //ul 하위에 있는 li 태그 제어
+          for(var i=0; lis.length; i++){
+              lis[i].style.color='red';   
+          }
+        ~~~
+    * document.getElementsByClassName
+    * document.getElementById (단수)
+        1. 배열이 아니라 1개만 리턴해 아래와 같이 쓰면된다   
+          id.style.color='green';
+    * document.querySelector : 1개만 리턴
+    * document.querySelectorAll : 모두 담아 유사배열로 리턴 
+    
+* jQuery
+    * 자주 사용하는 로직을 재사용 할수 있도록 고안된 라이브러리
+    * 기본 사용법
+        1. cdn
+        ~~~
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <!-- 여기서 //는 실행환경이 http이면 http, https면 https로 실행해줌-->
+    * 제어 대상을 찾기       
+        * $('li').css('color', 'red'); //<li style="color:red"> 동일
+            1. $ -> jQuery 함수, () -> css선택자 
+            2. li 태그를 가진 element 전체를 찾는다
+            3. .css 찾은 것에 css를 입힌다
+            4. . 메소드를 통해 jquery 객체를 리턴함
+    * chaining
+        * .css().find.().css 이와 같이 찾은 내용에 계속 다른 작업이 수행되는것 말함            
+     ~~~
+     DOM
+     let lis =document.getElementsByTagName('li');
+     for(let i=0;i<lis.length;i++){
+        lis[i].style.color='red';
+     }  
+     jQuery
+     $('li').css('color', 'red'); //모든 li element
+  
+     DOM
+     let lis =document.getElementsByClassName('.active');
+     for(let i=0;i<lis.length;i++){
+        lis[i].style.color='red';
+     }  
+     jQuery
+     $('.active').css('color', 'red'); //모든 active class  
+  
+     DOM
+     let id =document.getElementsByClassName('id');
+     id.style.color = 'red';
+     id.style.textDecoration ='underline'  
+     jQuery
+     $('#id').css('color', 'red').css('textDecoration', 'underline') //모든 active class  
+     ~~~  
+        
+    ## 11111111111111111111111
+      
 * Jquery 객체
     1. jQuery 함수의 리턴값으로 jQuery 함수를 이용해서 선택한 엘리먼트들에 대해서 처리할 작업을 프로퍼티
     2. let li =$('li); //$는 Jquery 함수를 나타낸다
@@ -274,7 +337,22 @@
   </script>
   ~~~                
 * 조회 API
+    * 객체의 조회 범위를 줄이기 위해 document가 아니라 element 객체의 getElementsBy* 메소드를 사용 하면 된다
+    * document와 element 객체의 getElement 차이점
+        1. document 는 문서 전체를 검색
+        2. element는 지정된 노드의 하위를 검색
     ~~~
+    <ul>
+        <li class="marked">html</li>
+        <li>css</li>
+        <li id="active">JavaScript
+            <ul>
+                <li>JavaScript Core</li>
+                <li class="marked">DOM</li>
+                <li class="marked">BOM</li>
+            </ul>
+        </li>
+    </ul>  
      var list = document.getElementsByClassName('marked');
       console.group('document');
       for(var i=0; i<list.length; i++){
@@ -283,14 +361,102 @@
       console.groupEnd();
        
       console.group('active');
-      var active = document.getElementById('active');     
-      var list = active.getElementsByClassName('marked');
+      var active = document.getElementById('active');  
+      var list = active.getElementsByClassName('marked');  //active의 자식만 검색
       for(var i=0; i<list.length; i++){
           console.log(list[i].textContent);
       }
       console.groupEnd();
    ~~~
-            
+
+* 속성 API  
+    * Element.getAttribute(name)
+    * Element.setAttribute(name, value)
+    * Element.hasAttribute(name);  
+    * Element.removeAttribute(name);
+    
+* 속성과 프로퍼티
+    * 속성 : target.setAttribute('class', 'important');
+    * 프로퍼티 : target.className = 'important'; 
+    * 속성과 프로퍼티의 이름과 값이 다를 수 도 있다.  
+        1. target.href : http포함 전체주소  
+        2. target.getAttribute("href") : 코딩된 내용만 출력 ./demo.html
+   * |속성|프로퍼티|
+     |---|---|
+     |class			|className|
+     |readonly		|readOnly|
+     |rowspan		|rowSpan|
+     |colspan		|colSpan|
+     |usemap			|userMap|
+     |frameborder	|frameBorder|
+     |for			|htmlFor|
+     |maxlength		|maxLength|
+    ~~~
+  <p id="target">
+      Hello world
+  </p>
+  <script>
+      var target = document.getElementById('target');
+      // attribute 방식
+      target.setAttribute('class', 'important');
+      // property 방식
+      target.className = 'important';
+  </script>
+    ~~~
+* jQuery 속성 제어 API  
+    * attr(setAttribute, getAttribute에 해당)
+    ~~~
+  var t = $('#target');
+  console.log(t.attr('href')); //http://opentutorials.org
+  t.attr('title', 'opentutorials.org'); // title 속성의 값을 설정한다.
+  t.removeAttr('title'); // title 속성을 제거한다.
+   ~~~
+* jQuery 속성과 프로퍼티
+    * attr = 속성
+    
+    * prop = 프로퍼티
+    
+    * 바닐라 자바스크립트에서는 속성과 프로퍼티가 다른점이 존재했지만 jQuery에서는 이것을 api에서 자동으로 보정해준다. 즉 똑같이 하면 된다
+    ~~~
+  // 현재 문서의 URL이 아래와 같다고 했을 때
+  // http://localhost/jQuery_attribute_api/demo2.html
+  var t1 = $('#t1');
+  console.log(t1.attr('href')); // ./demo.html 
+  console.log(t1.prop('href')); // http://localhost/jQuery_attribute_api/demo.html 
+   
+  var t2 = $('#t2');
+  console.log(t2.attr('checked')); // checked
+  console.log(t2.prop('checked')); // true
+  ~~~      
+
+* jQuery 조회 범위 제한
+    ~~~
+      <ul>
+          <li class="marked">html</li>
+          <li>css</li>
+          <li id="active">JavaScript
+              <ul>
+                  <li>JavaScript Core</li>
+                  <li class="marked">DOM</li>
+                  <li class="marked">BOM</li>
+              </ul>
+          </li>
+      </ul>
+      <script
+              src="https://code.jquery.com/jquery-1.12.4.js"
+              integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+              crossorigin="anonymous"></script>
+      <script>
+          //class가 marked를 먼저 찾은 후 id가 active인것을 찾는다
+          //$( ".marked", "#active").css( "background-color", "red" );
+          //$('#active .marked').css("background-color", "red");
+          //$('#active').find('.marked').css("background-color", "red");
+  
+          //id가 active인 css먼저 적용 후 class가 .marked를 찾아 css 적용한다
+          $('#active').css("background-color", "blue").find('.marked').css("background-color", "yellow");
+      </script>
+  ~~             
+                    
             
 * Node 객체         
     * Node 객체는 최상위 조상으로 모든 DOM은 Node를 상속받음
