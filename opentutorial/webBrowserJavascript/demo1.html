@@ -4,23 +4,21 @@
 <ul>
     <li>HTML</li>
     <li>CSS</li>
-    <li>JavaScript</li>
+    <li id="active">JavaScript</li>
 </ul>
-<ol>
-    <li>HTML</li>
-    <li class="active">CSS</li>
-    <li>JavaScript</li>
-</ol>
-
 <script>
-    // var li = document.querySelector('li');
-    // li.style.color='red';
-    // var li = document.querySelector('.active');
-    // li.style.color='blue';
-    var lli = document.getElementsByTagName('li');
-    for(let i = 0; i<lli.length;i++){
-        lli[0].style.color="blue";
+    console.group('before');
+    var lis = document.getElementsByTagName('li');
+    for(var i = 0; i < lis.length; i++){
+        console.log(lis[i]);
     }
+    console.groupEnd();
+    console.group('after');
+    lis[1].parentNode.removeChild(lis[1]);
+    for(var i = 0; i < lis.length; i++){
+        console.log(lis[i]);
+    }
+    console.groupEnd();
 </script>
 </body>
 </html>

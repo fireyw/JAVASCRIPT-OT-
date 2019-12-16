@@ -229,7 +229,71 @@
      jQuery
      $('#id').css('color', 'red').css('textDecoration', 'underline') //모든 active class  
      ~~~  
-        
+* HTML Element
+    * HTML 문서 작성시 브라우저는 가장 먼저 태그, 엘리먼트에 대한 객체를 찾고 그 객체에 여러 특징을 부여함
+    * HTMLLIElement: getElement* 로 찾은 결과가 1개인 경우
+    * HTMLCollection: getElement* 로 찾은 결과가 복수인 경우
+    * document.getElementById : 리턴 데이터 타입은 HTMLLIELement
+    * document.getElementsByTagName : 리턴 데이터 타입은 HTMLCollection    
+    ~~~
+  <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+  </ul>
+  <ol>
+      <li>HTML</li>
+      <li id="active">CSS</li>
+      <li>JavaScript</li>
+  </ol>
+  
+  <script>
+       var li = document.getElementById('active');
+       console.log(li.constructor.name);  //HTMLLIElement 찾은 객체가 1개인 경우
+       var lis = document.getElementsByTagName('li');
+       console.log(lis.constructor.name); //HTMLCollection 찾은 객체가 여러개인 경우
+  
+  </script>
+   ~~~        
+
+*  모든 엘리먼트들은 HTMLElement를 상속 받고 있다
+    ~~~           
+      interface HTMLLIElement : HTMLElement {
+      interface HTMLAnchorElement : HTMLElement {
+   ~~~    
+    * [HTMLLIElement](https://www.w3.org/TR/2003/REC-DOM-Level-2-HTML-20030109/html.html#ID-74680021)
+    * [HTMLAnchorElement](https://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-48250443)
+    * [HTMLInputElement](https://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-6043025)    
+    ~~~
+   interface HTMLElement : Element {
+              attribute DOMString       id;
+              attribute DOMString       title;
+              attribute DOMString       lang;
+              attribute DOMString       dir;
+              attribute DOMString       className;
+   };
+   ~~~  
+
+* DOM Tree  
+  ![DOC](./image/DOM%20Tree.png)
+  
+* HTMLCollection
+    * 목록이 실시간으로 갱신됨  
+    ~~~  
+      console.group('before');
+      var lis = document.getElementsByTagName('li');
+      for(var i = 0; i < lis.length; i++){
+          console.log(lis[i]);
+      }
+      console.groupEnd();
+      console.group('after');
+      lis[1].parentNode.removeChild(lis[1]); //목록 재조회(getElements*) 필요 없음
+      for(var i = 0; i < lis.length; i++){
+          console.log(lis[i]);
+      }
+      console.groupEnd();
+    ~~~  
+  
     ## 11111111111111111111111
       
 * Jquery 객체
