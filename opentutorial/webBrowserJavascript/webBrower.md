@@ -670,4 +670,135 @@
         2. afterbegin(자식)  : 해당 태그와 자식 레벨 중 가장 위쪽
         3. beforend(자식)    : 해당 태그와 자식 라벨 중 가장 아래쪽
         4. afterend(동일)    : 해당 태그와 같은 레벨 아래쪽
-              
+
+* Document 객체
+    * ![node객체](./image/document.png)
+    * Dom의 시작점, window의 객체의 프로퍼티(하위)
+        1. createElement()
+        2. createTextNode()
+    * API
+        1. API
+        2. title
+        3. URL
+        4. referrer
+        5. lastModified
+                    
+    ~~~
+  <script>
+  //document 객체는 window 객체의 소속이다.
+  console.log(window.document);
+  //document 객체의 자식으로는 Doctype과 html이 있다. 
+  console.log(window.document.childNodes[0]);
+  console.log(window.document.childNodes[1]);
+  </script>
+    ~~~
+  
+* Text 객체  
+    ![Text Object](./image/textObject.png)
+    ~~~
+    <p id="target1"><span>Hello world</span></p>
+    <p id="target2">
+        <span>Hello world</span>
+    </p>
+    <script>
+        var t1 = document.getElementById('target1').firstChild;
+        var t2 = document.getElementById('target2').firstChild;
+    
+        console.log(t1.firstChild.nodeValue);
+        try{
+            console.log(t2.firstChild.nodeValue);  //공백도 텍스트 객체임
+        } catch(e){
+            console.log(e);
+        }
+        console.log(t2.nextSibling.firstChild.nodeValue);
+    
+    </script>
+    ~~~
+    ~~~
+    <ul>
+        <li id="target">html</li>
+        <li>css</li>
+        <li>JavaScript</li>
+    </ul>
+    <script>
+        var t = document.getElementById('target').firstChild;
+        console.log(t.nodeValue);  //html
+        console.log(t.data);       //html
+    </script>
+    ~~~
+
+* 조작 API
+    1. appendData()
+    2. deleteData()
+    3. insertData()
+    4.replaceData()
+    5. substringData()
+    ~~~
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <style>
+      #target{
+          font-size:77px;
+          font-family: georgia;
+          border-bottom:1px solid black;
+          padding-bottom:10px;
+      }
+      p{
+          margin:5px;
+      }
+      </style>
+  </head>
+  <body>
+  <p id="target">Cording everybody!</p>
+  <p> data : <input type="text" id="datasource" value="JavaScript" /></p>
+  <p>   start :<input type="text" id="start" value="5" /></p>
+  <p> end : <input type="text" id="end" value="5" /></p>
+  <p><input type="button" value="appendData(data)" onclick="callAppendData()" />
+  <input type="button" value="deleteData(start,end)" onclick="callDeleteData()" />
+  <input type="button" value="insertData(start,data)" onclick="callInsertData()" />
+  <input type="button" value="replaceData(start,end,data)" onclick="callReplaceData()" />
+  <input type="button" value="substringData(start,end)" onclick="callSubstringData()" /></p>
+  <script>
+      var target = document.getElementById('target').firstChild;
+      var data = document.getElementById('datasource');
+      var start = document.getElementById('start');
+      var end = document.getElementById('end');
+      function callAppendData(){
+          target.appendData(data.value);
+      }
+      function callDeleteData(){
+          target.deleteData(start.value, end.value);
+      }
+      function callInsertData(){
+          target.insertData(start.value, data.value); 
+      }
+      function callReplaceData(){
+          target.replaceData(start.value, end.value, data.value);
+      }
+      function callSubstringData(){
+          alert(target.substringData(start.value, end.value));
+      }
+  </script>
+  </body>
+  </html>
+   ~~~
+  
+* 문서의 기하학적 특성  
+    * getBoundingClientRect: 엘리먼트 크기 및 위치를 알아냄
+        1. body 와의 거리를 기준으로 표시해준다
+        2. 테두리를 제외한 엘리먼트 크기를 알고 싶다면 ClientWidth, ClientHeight 사용            
+    * [실행](http://output.jsbin.com/vuxit/1/)
+        
+    * ViewPort        
+        1. 문서의 내용 중 사용자에게 보여주는 영역
+        2. window.pageYOffset : 현재 스크롤 위치
+        
+    * 스크롤
+        1. window.scrollTo : 스크롤 이동
+        ~~~
+        //viewport의 크기
+       console.log('window.innerWidth:', window.innerWidth, 'window.innerHeight:', window.innerHeight);
+        //전체 화면 크기
+       console.log('screen.width:', screen.width, 'screen.height:', screen.height);
+        ~~~
