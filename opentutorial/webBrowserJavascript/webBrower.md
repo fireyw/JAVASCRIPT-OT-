@@ -802,3 +802,31 @@
         //전체 화면 크기
        console.log('screen.width:', screen.width, 'screen.height:', screen.height);
         ~~~
+
+* 이벤트
+    * 사용자가 클릭, 스크롤, 필드내용 수정 등등
+        1. event Target : input button TAG
+        2. event Type : onChange, onClick, onDbClick
+        3. event Handler: event가 발생 했을 때 실행되는 코드
+        
+    * inline        
+        * this를 사용하여 간편하게 value 참조 가능
+        ~~~
+      <input type="button" id="target" onclick="alert('Hello world, '+document.getElementById('target').value);" value="button" />
+      <!--this를 통해서 간편하게 참조할 수 있다-->
+      <input type="button" onclick="alert('Hello world, '+this.value);" value="button" />
+      ~~~
+        * 장점
+            1. event type을 쉽게 알 수 있다
+            2. TAG에 직접 기술되 HTML의 정보로써의 가치를 저하시켜 function으로 빼는게 좋다.
+    
+    * 프로퍼티 리스너
+        * 객체의 프로퍼티로 이벤트 등록           
+        * var event = event || window.event; //event가 널이면 window.event 값을 가져오게함
+        ~~~
+       var t = document.getElementById('target');
+          t.onclick = function(event){
+              var event = event || window.event; //크로스브라우징 문제해결
+              alert('Hello world, '+event.target.value)
+          }
+        ~~~

@@ -3,30 +3,14 @@
 <head>
 </head>
 <body>
-<style>
-    body{
-        padding:0;
-        margin:0;
-    }
-    div{
-        border:50px solid #1065e6;
-        padding:50px;
-        margin:50px;
-    }
-    #target{
-        width:100px;
-        height:150px;
-    }
-</style>
-<input type="button" id="scrollBtn" value="scroll(0, 1000)" />
+<input type="button" id="target1" value="button11"/>
 <script>
-    console.log('window.innerWidth:', window.innerWidth, 'window.innerHeight:', window.innerHeight);
-    console.log('screen.width:', screen.width, 'screen.height:', screen.height);
+    let t=document.getElementById("target1");
+    t.onclick = function(event){
+        //alert('hello ' + event.target.value);
+        console.dir(event);
+        console.log('log',event);
+    }
 </script>
-<div>
-    <div id="target">
-        Coding
-    </div>
-</div>
 </body>
 </html>
