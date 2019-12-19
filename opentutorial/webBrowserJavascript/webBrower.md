@@ -975,7 +975,7 @@
     var person = {"height":174, "job":"programmer"}
     var members = ["egoing", "k8805"]
     ~~~
-    3. JSON.parse() : JSON문자열을 분석하여 객체로 생성
+    3. JSON.parse() : JSON문자열을 분석하여 결과를 javascript 값이나 객체로 생성
     4. JSON.stringfy() : JSON 객체를 문자열로 변환
     ~~~
     info =`{
@@ -993,3 +993,66 @@
     typeof(infoObj)
     "object"
     ~~~
+    
+    * JSON이 없을 때 
+        * 배열을 서버에서 전달받을 수 없어 문자로 받아 그것을 사용하기 위해 배열로 재 가공해야한다.     
+    ~~~
+      let _tzs='Asia/Seoul,America/New_York';      
+      let tzs=_tzs.split(',');      
+      tzs
+      (2) ["Asia/Seoul", "America/New_York"]
+    ~~~
+  
+    * JSON화 시켰을 때    
+    ~~~
+      let _a=["김용우","이주영"];
+      let a=JSON.stringify(_a); //외부에서 넘어왔다고 가정 Javascript 값이나 객체를 문자열로 변환
+      console.log(a);
+      console.log(JSON.parse(a)); //JSON객체로 변환
+    ~~~
+  
+* jQuery Ajax  
+    * 장점
+        1. 크로스브라우징 문제를 알아서 해결해준다
+        
+    * ajax의 문법  
+        1. jQuery.ajax( [settings ] )  
+            setting는 Ajax 통신을 위한 옵션을 담고 있는 객체가 들어간다. 주요한 옵션을 열거해보면 아래와 같다.
+        
+            1. data
+                * 서버로 데이터를 전송할 때 이 옵션을 사용한다.
+            2. dataType
+                * 서버측에서 전송한 데이터를 어떤 형식의 데이터로 해석할 것인가를 지정한다. 값으로 올 수 있는 것은 xml, json, script, html이다. 형식을 지정하지 않으면 jQuery가 알아서 판단한다.
+            3. success
+                * 성공했을 때 호출할 콜백을 지정한다.  
+                * Function( PlainObject data, String textStatus, jqXHR jqXHR )
+            4. type
+                * 데이터를 전송하는 방법을 지정한다. get, post를 사용할 수 있다.
+        ~~~
+      //https://yts-proxy.now.sh/list_movies.json?sort_by=rating
+       $('#execute').click(function(){
+              $.ajax({
+                  url:'./time2.php',
+                  type:'post',
+                  data:$('form').serialize(),  //<form>안에 있는 내용을 한번에 전달
+                  success:function(data){
+                      $('#time').text(data);
+                  }
+              })
+          })
+        ~~~
+        ~~~
+       $('#execute').click(function(){
+              $.ajax({
+                  url:'./time3.php',
+                  dataType:'json',        //서버로부터 받은 데이터 타입
+                  success:function(data){ //url 호출 후 
+                      var str = '';
+                      for(var name in data){
+                          str += '<li>'+data[name]+'</li>';
+                      }
+                      $('#timezones').html('<ul>'+str+'</ul>');
+                  }
+              })
+          })
+      ~~~

@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html>
 <body>
-<ul>
-    <li class="marked">html</li>
-    <li>css</li>
-    <li id="active">JavaScript
-        <ul>
-            <li>JavaScript Core</li>
-            <li class="marked">DOM</li>
-            <li class="marked">BOM</li>
-        </ul>
-    </li>
-</ul>
+<div>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+</div>
+<p id="movieList"></p>
+<input type="button" id="execute" value="execute" />
+<script
+        src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
 <script>
-    var list = document.getElementsByClassName('marked');
-    console.group('document');
-    for(var i=0; i<list.length; i++){
-        console.log(list[i].textContent);
-    }
-    console.groupEnd();
+    $('#execute').click(function(){
+        $.ajax({
+            url:'https://yts-proxy.now.sh/list_movies.json?sort_by=rating',
 
-    console.group('active');
-    var active = document.getElementById('active');
-    var list = active.getElementsByClassName('marked');
-    for(var i=0; i<list.length; i++){
-        console.log(list[i].textContent);
-    }
-    console.groupEnd();
+            dataType:'json',
+            success:function(data){
+                console.log(data.data.movies);
+                let title='';
+                for(one in data.data.movies ){
+                    title+='<li>'+data.data.movies[one].title+ ' rank :' +data.data.movies[one].rating+'</li>';
+                }
+                $('#movieList').html('<ul>'+title+'</ul');
+
+            }
+        })
+    })
 </script>
 </body>
 </html>
