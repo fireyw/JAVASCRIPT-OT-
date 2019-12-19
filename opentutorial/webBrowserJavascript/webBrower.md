@@ -805,8 +805,8 @@
 
 * 이벤트
     * 사용자가 클릭, 스크롤, 필드내용 수정 등등
-        1. event Target : input button TAG
-        2. event Type : onChange, onClick, onDbClick
+        1. event Target : 이벤트가 발생하는 대상(input button TAG)
+        2. event Type : 이벤트의 타입, onChange, onClick, onDbClick
         3. event Handler: event가 발생 했을 때 실행되는 코드
         
     * inline        
@@ -821,7 +821,7 @@
             2. TAG에 직접 기술되 HTML의 정보로써의 가치를 저하시켜 function으로 빼는게 좋다.
     
     * 프로퍼티 리스너
-        * 객체의 프로퍼티로 이벤트 등록           
+        * 객체의 프로퍼티로 이벤트 등록
         * var event = event || window.event; //event가 널이면 window.event 값을 가져오게함
         ~~~
        var t = document.getElementById('target');
@@ -829,4 +829,167 @@
               var event = event || window.event; //크로스브라우징 문제해결
               alert('Hello world, '+event.target.value)
           }
-        ~~~
+        ~~~    
+    *  addEventListener
+        * 이벤트 추가
+        * 중복으로 추가가 된다면 가장 아래쪽에 있는 코드가 실행됨
+       ```javascript
+       <input type="button" id="target" value="button" />
+       <script>
+           var t = document.getElementById('target');
+           t.addEventListener('click', function(event){
+               alert('Hello world, '+event.target.value);
+           });
+       </script>
+        ```
+        * listener 재사용
+       ```javascript
+        var t1 = document.getElementById('target1');
+           var t2 = document.getElementById('target2');
+           function btn_listener(event){
+               switch(event.target.id){  //클릭한 tag 의 ID를 알 수 있다
+                   case 'target1':
+                       alert(1);
+                       break;
+                   case 'target2':
+                       alert(2);
+                       break;
+               }
+           }
+           t1.addEventListener('click', btn_listener);
+           t2.addEventListener('click', btn_listener);
+       ```
+        
+    * 이벤트 전파(버블링과 캡쳐링)
+        * 캡쳐링: body부터 가장 하위 태그까지 event가 전파되는것
+            1. 과거 브라우저에서 호환 x
+            2. addEventListener('click', handler, true); //true: 캡쳐링
+        * 버블링: 가장 하위태그부터 상위까지 event가 전파되는 것
+            1. 많이 사용하며 어느 브라우저나 사용 가능
+            2. addEventListener('click', handler, true); //false: 버블링
+        * addEventListener 의 eventPhase
+            * event.eventPhase
+                1. Event.NONE	0                  
+                2. Event.CAPTURING_PHASE	1
+                3. Event.AT_TARGET	2
+                4. Event.BUBBLING_PHASE	3
+        * stopPropagation
+            1. 이벤트 캡쳐링과 버블링에 있어 현재 이벤트 이후의 전파를 막습니다.
+                             
+                                                                        
+        ```javascript
+      <html>
+      <head>
+          <style>
+              html{border:5px solid red;padding:30px;}
+              body{border:5px solid green;padding:30px;}
+              fieldset{border:5px solid blue;padding:30px;}
+              input{border:5px solid black;padding:30px;}
+          </style>
+      </head>
+      <body>
+      <fieldset>
+          <legend>event propagation</legend>
+          <input type="button" id="target" value="target">
+      </fieldset>
+      <script>
+          function handler(event){
+              var phases = ['capturing', 'target', 'bubbling']
+              console.log(event.target.nodeName, this.nodeName, phases[event.eventPhase-1]);
+          }
+        function stopHandler(event){
+            var phases = ['capturing', 'target', 'bubbling']
+            console.log(event.target.nodeName, this.nodeName, phases[event.eventPhase-1]);
+            event.stopPropagation();
+        }          
+          
+          
+          document.getElementById('target').addEventListener('click', handler, true);
+          document.querySelector('fieldset').addEventListener('click', handler, true);
+          document.querySelector('body').addEventListener('click', stopHandler, true);
+          document.querySelector('html').addEventListener('click', handler, true);
+      </script>
+      </body>
+      </html>
+       ```
+
+
+* 네트워크 통신
+    1. 자바스크립트를 이용해서 웹브라우저의 통신 기능을 사용하는 방법을 알아봄    
+    * Ajax
+       1. Asynchronous Javascript and Xml(현재 xml외 다른것도 다가능)
+       2. 비동기로 서버와 통신하는 방식
+    * XMLHttpRequest
+        1. ajax로 통신하기 위해 사용하는 API
+        2. get 방식
+        ```javascript
+      <script>
+          document.querySelector('input').addEventListener('click', function(event){
+              var xhr = new XMLHttpRequest();
+              xhr.open('GET', './time.php'); //<form method="GET" action="/time"/>
+              
+              //상태변화가 있을때 아래 handler가 실행. 보통은 통신이 끝난 경우에만 작업을 수행한다
+              xhr.onreadystatechange = function(){
+                  if(xhr.readyState === 4 && xhr.status === 200){  //통신이 성공적으로(200) 끝났을때(4)
+                      document.querySelector('#time').innerHTML = xhr.responseText;
+                  }
+              }
+              xhr.send(); //통신 시작
+          });
+      </script>
+      ```
+    * post 방식
+        1. timezone=Asia/Seoul&format=Y-m-d ( =으로 값 설정하고 &을 통해 파라미터 추가)
+        2. 파라미터를 만들고 setRequestHeader를 통해 헤더정보를 입력해야 한다  
+           application/x-www-form-urlencoded 이렇게 하면 form 을 통해 전송하는것과 같이 인식된다
+        
+        ```javascript
+      <script>
+      document.querySelector('input').addEventListener('click', function(event){
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', './time2.php');
+          xhr.onreadystatechange = function(){
+              document.querySelector('#time').innerHTML = xhr.responseText;
+          }
+          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+          var data = '';
+          data += 'timezone='+document.getElementById('timezone').value;
+          data += '&format='+document.getElementById('format').value;
+          xhr.send(data); 
+      });
+      </script> 
+      ```    
+      ~~~
+      <?php
+      $d1 = new DateTime;
+      $d1->setTimezone(new DateTimezone($_POST['timezone']));  //asia/seoul
+      echo $d1->format($_POST['format']);   //Y-m-d H:i:s 
+      ?>
+      ~~~  
+        
+* JSON  
+    1. Javascript Object Notation의 약자로 javascript에서 객체를 만들 때 사용하는 표현식    
+    2. Javascript 에서 객체는 중괄호로 이루어진 것이다 {}  
+       배열은 대괄호로 이루어짐 []          
+    ~~~
+    var person = {"height":174, "job":"programmer"}
+    var members = ["egoing", "k8805"]
+    ~~~
+    3. JSON.parse() : JSON문자열을 분석하여 객체로 생성
+    4. JSON.stringfy() : JSON 객체를 문자열로 변환
+    ~~~
+    info =`{
+        "color_scheme": "Monokai.sublime-color-scheme",
+        "font_face": "",
+        "font_size": 10
+    }`    
+  
+    typeof(info)
+    "string"
+    JSON.parse(info)
+    {color_scJSON.parseheme: "Monokai.sublime-color-scheme", font_face: "", font_size: 10}
+    infoObj=(info)  //object로 변환
+    {color_scheme: "Monokai.sublime-color-scheme", font_face: "", font_size: 10}
+    typeof(infoObj)
+    "object"
+    ~~~

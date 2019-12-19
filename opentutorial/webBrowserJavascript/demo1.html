@@ -1,16 +1,17 @@
-<!DOCTYPE html>
 <html>
 <head>
+
 </head>
 <body>
-<input type="button" id="target1" value="button11"/>
-<script>
-    let t=document.getElementById("target1");
-    t.onclick = function(event){
-        //alert('hello ' + event.target.value);
-        console.dir(event);
-        console.log('log',event);
-    }
-</script>
+<p>time : <span id="time"></span></p>
+<select id="timezone">
+    <option value="Asia/Seoul">asia/seoul</option>
+    <option value="America/New_York">America/New_York</option>
+</select>
+<select id="format">
+    <option value="Y-m-d H:i:s">Y-m-d H:i:s</option>
+    <option value="Y-m-d">Y-m-d</option>
+</select>
+<input type="button" id="execute" value="execute" />
 </body>
 </html>
