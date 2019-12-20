@@ -922,7 +922,8 @@
     * XMLHttpRequest
         1. ajax로 통신하기 위해 사용하는 API
         2. get 방식
-        ```javascript
+            1. timezone=Asia/Seoul&format=Y-m-d ( =으로 값 설정하고 &을 통해 파라미터 추가)
+       ```javascript
       <script>
           document.querySelector('input').addEventListener('click', function(event){
               var xhr = new XMLHttpRequest();
@@ -938,9 +939,8 @@
           });
       </script>
       ```
-    * post 방식
-        1. timezone=Asia/Seoul&format=Y-m-d ( =으로 값 설정하고 &을 통해 파라미터 추가)
-        2. 파라미터를 만들고 setRequestHeader를 통해 헤더정보를 입력해야 한다  
+    * post 방식        
+        1. 파라미터를 만들고 setRequestHeader를 통해 헤더정보를 입력해야 한다  
            application/x-www-form-urlencoded 이렇게 하면 form 을 통해 전송하는것과 같이 인식된다
         
         ```javascript

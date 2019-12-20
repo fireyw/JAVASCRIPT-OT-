@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+</div>
+<p id="movieList"></p>
+<input type="button" id="execute" value="execute" />
+<script
+        src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
+<script>
+    document.querySelector('input').addEventListener('click', function(event){
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://yts-proxy.now.sh/list_movies.json?sort_by=rating');
+        xhr.onreadystatechange = function(){
+            console.log(xhr.response)
+        }
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        var data = '';
+        xhr.send(data);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+</div>
+<p id="movieList"></p>
+<input type="button" id="execute" value="execute" />
+<script
+        src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
+<script>
+    document.querySelector('input').addEventListener('click', function(event){
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://yts-proxy.now.sh/list_movies.json?sort_by=rating'); //<form method="GET" action="/time"/>
+
+        //상태변화가 있을때 아래 handler가 실행. 보통은 통신이 끝난 경우에만 작업을 수행한다
+        xhr.onreadystatechange = function(){
+            console.log(xhr.response)
+            // if(xhr.readyState === 4 && xhr.status === 200){  //통신이 성공적으로(200) 끝났을때(4)
+            //     document.querySelector('#time').innerHTML = xhr.responseText;
+            // }
+        }
+        //xhr.send(); //통신 시작
+    });
+</script>
+</body>
+</html>
