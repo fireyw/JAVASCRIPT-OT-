@@ -18,7 +18,7 @@
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://yts-proxy.now.sh/list_movies.json?sort_by=rating');
         xhr.onreadystatechange = function(){
-            console.log(xhr.response)
+            console.log(xhr.response);
         }
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         var data = '';

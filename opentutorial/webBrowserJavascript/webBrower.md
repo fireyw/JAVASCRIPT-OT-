@@ -913,6 +913,157 @@
       </html>
        ```
 
+* 기본동작의 취소
+    * 기본동작
+        1. text 필드에 포커스 주고 키보드를 입력하면 텍스트가 입력됨
+        2. 폼에서 submit을 누르면 데이터가 전송
+        3. a태그를 클릭하면 href 속성으로 URL 이동
+    
+    * inline
+        * return false : 기본동작을 작동하지 않게 해준다(취소)
+        ~~~
+      <a href="http://opentutorials.org" onclick="if(document.getElementById('prevent').checked) return false;">opentutorials</a>
+        ~~~
+    
+    * property
+        * return false : 기본동작을 작동하지 않게 해준다(취소)
+        ~~~
+         document.querySelector('a').onclick = function(event){
+                if(document.getElementById('prevent').checked)
+                    return false;
+            };
+      ~~~
+    * addEventListener
+        * event.preventDefault();
+      ~~~
+      document.querySelector('a').addEventListener('click', function(event){
+                      if(document.getElementById('prevent').checked)
+                          event.preventDefault();
+                  });
+      ~~~
+
+* 폼
+    * 사용자가 입력한 정보를 서버로 전송할 때 사용      
+    * change: 변경이 일어났을 때
+    * focus: 엘리먼트에 포커스가 생겼을 때
+    * blur: 엘리먼트에서 포커스가 사라졋을 때
+    
+* 문서 로딩
+    * 단점 : load 이벤트는 문서내의 모든 리소스(이미지, 스크립트)의 다운로드가 끝난 후에 실행된다.  
+           이것을 에플리케이션의 구동이 너무 지연되는 부작용을 초래할 수 있다.              
+    ~~~
+    1. window.addEventListener('load', function(){});
+    2. window.onload=function() {
+           let p = document.getElementById('time');
+           console.log(p);
+       }
+    ~~~
+    * 대체방법
+        1. DOMContentLoaded 사용 :  문서에서 스크립트 작업을 할 수 있을 때 실행되기 때문에 이미지 다운로드를 기다릴 필요가 없다.
+    ~~~
+      //DOMContentLoaded 이 load보다 먼저 실행됨
+      <script>
+          window.addEventListener('load', function(){              
+              console.log("11111");
+          })
+          window.addEventListener('DOMContentLoaded', function(){
+              let p = document.getElementById('time');
+              console.log("22222");
+          })
+      </script>
+    ~~~
+
+* 마우스
+    * click : 클릭했을 때 발생하는 이벤트. 
+    * dblclick : 더블클릭을 했을 때 발생하는 이벤트
+    * mousedown : 마우스를 누를 때 발생
+    * mouseup : 마우스버튼을 땔 때 발생
+    * mousemove : 마우스를 움직일 때
+    * mouseover : 마우스가 엘리먼트에 진입할 때 발생
+    * mouseout : 마우스가 엘리먼트에서 빠져나갈 때 발생
+    * contextmenu : 컨텍스트 메뉴가 실행될 때 발생
+    
+* Jquery Event
+    * 순수 자바스크립트와 비교
+    ~~~
+   <script>
+       // 순수하게 구현했을 때
+       var target = document.getElementById('pure');       
+       target.addEventListener('click', function(event){
+           alert('pure');
+       });    
+       // jQuery를 사용했을 때
+       $('#jquery').on('click', function(event){
+           alert('jQuery');
+       })
+   </script>
+   ~~~     
+
+* Jquery onApi
+    * .on( events [, selector ] [, data ], handler )
+        1. [. selector] : 이벤트를 트리거하는 선택한 요소의 하위 항목을 필터링하는 선택 도구 문자열
+        2. [, data] : handler에 전달할 데이터 
+    ~~~
+  <script>
+      $('ul').on('click', 'a, li', function (event) { //ul 하위의 a li 에도 click이벤트 발생
+          console.log(this.tagName);
+      })
+  </script>
+    ~~~
+    
+    * late biding
+        * jQuery는 존재하지 않는 엘리먼트에도 이벤트를 등록할 수 있는 놀라운 기능을 제공한다
+        * body의 on 함수에 엘리먼트를 넣으면 됨
+    ~~~
+  <script>
+      $('body').on('click','a, li', function(event){
+          console.log(this.tagName);
+      })
+  </script>
+  <ul>
+      <li><a href="#">HTML</a></li>
+      <li><a href="#">CSS</a></li>
+      <li><a href="#">JavaScript</a></li>
+  </ul>
+   ~~~                      
+
+* 다중 바인딩
+    * on 이벤트에 해당 action을 띄어쓰기로 여러개 입력하여 다중 바인딩 할 수 있다. 
+    ~~~ 
+    type1
+     $('#target').on('focus blur', function(e){
+          $('#status').html(e.type);
+      }) 
+    type2
+    handler= function(e){
+        console.log(e.type);
+    }
+  
+    $('#target').on({
+        'focus':handler,
+        'blur':handler
+    });
+    ~~~
+    * 이벤트 체이닝 가능
+    $('#target').on('focus',handler).on('blur',handler)           
+      
+* 이벤트 제거
+    * off 함수를 사용하여 이벤트 제거
+    * off('event') : 해당 이벤트 모두 제거
+    * off('event', handler) : handler 이벤트만 제거
+    ~~~
+    var handler = function(e){
+      $('#status').text(e.type+Math.random());
+    };
+    $('#target').on('focus blur', handler)
+    $('#target').on('focus', funcion(){
+        console.log('second event'); 
+    });
+    $('#remove').on('click' , function(e){
+      $('#target').off('focus blur', handler);  //handler가 있는 이벤트만 제거
+      $('#target').off('focus'); //focus 이벤트 모두 제거됨                                                      
+    })
+  ~~~
 
 * 네트워크 통신
     1. 자바스크립트를 이용해서 웹브라우저의 통신 기능을 사용하는 방법을 알아봄    

@@ -1,17 +1,22 @@
+<!DOCTYPE>
 <html>
 <head>
-
-</head>
 <body>
-<p>time : <span id="time"></span></p>
-<select id="timezone">
-    <option value="Asia/Seoul">asia/seoul</option>
-    <option value="America/New_York">America/New_York</option>
-</select>
-<select id="format">
-    <option value="Y-m-d H:i:s">Y-m-d H:i:s</option>
-    <option value="Y-m-d">Y-m-d</option>
-</select>
-<input type="button" id="execute" value="execute" />
+<ul>
+    <li><a href="#">HTML</a></li>
+    <li><a href="#">CSS</a></li>
+    <li><a href="#">JavaScript</a></li>
+</ul>
+<script
+        src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous">
+</script>
+<script>
+    $('ul').on('click', 'a, li', function (event) {
+        console.log(this.tagName);
+    })
+</script>
 </body>
+</head>
 </html>

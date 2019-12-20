@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<input type="text" id="target"></textarea>
+<input id="remove" type="button" value="remove"/>
+<p id="status"></p>
+<script
+        src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
+<script>
+    // var handler = function (e) {
+    //     $('#status').text(e.type + Math.random());
+    // };
+    // //   $('#target').on('focus blur', handler);
+    // // $('#target').on('focus', function () {
+    // //     alert(1);
+    // // });
+    $( "#target" ).focus(function() {
+        alert( "Handler for .focus() called." );
+    });
+    // $('#remove').on('click', function (e) {
+    //     // 특정 이벤트에 걸린 메소드만 지울때
+    //     // $('#target').off('focus blur', handler);
+    //     // 이벤트 다 지울때
+    //     //$('#target').off('focus');
+    // })
+</script>
+</body>
+</html>
