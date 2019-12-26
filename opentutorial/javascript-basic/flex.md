@@ -12,4 +12,12 @@
         <item></item>
         <item></item> 
     </container>
-             
+
+    * div 
+        1. 전체화면을 쓰려는 특성이 있다(block level element)             
+  
+    * flex의 첫 시작
+        1. 가장 바깥쪽에 display:flex 를 주는 것부터 시작
+        2. flex-direction 를 통해 방향을 결정한다(row, column)
+        3. flex는 기본적으로 direction의 전체 블럭을 사용한다
+    
