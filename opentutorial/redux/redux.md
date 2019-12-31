@@ -12,4 +12,7 @@
         4. 핫 모듈 리로딩도 가능(app가 변경해도 데이터는 그대로 남아 있을 수 있다)
 
 * store
-    * ![store map](./images/store.jpg)        
+    * ![store map](./images/store.jpg)      
+    
+* 장점
+    1. 중앙 집중적인 데이터 store 를 통해 app를 쉽게 개발 할 수 있다.       
