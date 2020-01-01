@@ -15,4 +15,21 @@
     * ![store map](./images/store.jpg)      
     
 * 장점
-    1. 중앙 집중적인 데이터 store 를 통해 app를 쉽게 개발 할 수 있다.       
+    1. 중앙 집중적인 데이터 store 를 통해 app를 쉽게 개발 할 수 있다.
+    
+* reducer
+    1. dispatcher 를 통해 action 값이 들어오면 기존 state와 비교해서 새로운 state를 만드는 것이 역할  
+     (ex)dispatcher: 은행 창구, reducer: 장부에 기록하는사람, state: 장부   
+    2. return 시 기존 state를 리턴하는게 아니라 state를 복제한 newState에 변경된 값을 덮어 써 리턴한다
+* dispatch
+    1. type은 필수 
+* subscribe
+    1. state 가 변경 될때마다 호출 되는 부분  
+    ex) store.subscribe(red); //state 변경 시 red 함수 호출
+            
+    
+    
+* 객체 복사(Object.assign)
+    * Object.assign({}, {name:'egoing'}, {city:'seoul'})
+        1. 반드시 첫번째 인자는 비여있는 값이 들어가야 한다
+        2. name을 복사한 객체를 만든 후 그 객체에 city를 다시 복제한다.                   
