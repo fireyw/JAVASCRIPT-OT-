@@ -38,7 +38,7 @@
         * flex-wrap 
             1. default: nowrap
             2. wrap: container의 크기보다 item들의 합의 크기가 더 크다면 줄바꿈이 되서 아래로 내려간다
-        * flex-items(수직과 관련된 정렬)
+        * align-items(수직과 관련된 정렬)
             1. default: stretch  
                flex 속성을 주는 순간 items 들은 container의 높이와 같아 진다 
             2. flex-start: 아이템 자신들이 가지고 있는 값 만큼 영역을 지정
