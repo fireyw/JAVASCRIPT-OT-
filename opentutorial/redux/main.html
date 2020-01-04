@@ -18,20 +18,22 @@
             `
     }
 
-    function TOC(){
-        var state=store.getState();
+    function TOC() {
+        var state = store.getState();
         console.log('toc', state)
-        var i=0;
-        var liTags='';
-        while(i<state.contents.length){
+        var i = 0;
+        var liTags = '';
+        while (i < state.contents.length) {
             liTags += `
                     <li>
-                        <a href="${state.contents[i].id}">${state.contents[i].title}</a>
+                        <!--<a href="${state.contents[i].id}" onclick="detail()">${state.contents[i].title}</a>-->
+                        <div id="${state.contents[i].id}" onclick="detail(${state.contents[i].id})">${state.contents[i].title}</div>
+
                     </li>
                     `;
-            i=i+1;
+            i = i + 1;
         }
-        document.querySelector('#toc').innerHTML=`
+        document.querySelector('#toc').innerHTML = `
          <nav>
             <ol>
                ${liTags}
@@ -40,8 +42,25 @@
         `
     }
 
-    function control(){
-        document.querySelector('#control').innerHTML=`
+    function detail(id) {
+        console.log('detail click');
+        var state = store.getState();
+
+        for (let i = 1; i < state.contents.length+1; i++) {
+            if (i === id) {
+                console.log('i',i);
+                document.querySelector('#contents').innerHTML = `
+                <article>
+                    <h2>${state.contents[i-1].title}</h2>
+                        ${state.contents[i-1].desc}
+                    </article>
+                    `
+                }
+        }
+    }
+
+    function control() {
+        document.querySelector('#control').innerHTML = `
         <ul>
             <li><a href="/create">create</a></li>
             <li><input type="button" value="delete"></li>
@@ -49,8 +68,8 @@
         `
     }
 
-    function article(){
-        document.querySelector('#contents').innerHTML=`
+    function article() {
+        document.querySelector('#contents').innerHTML = `
         <article>
             <h2>HTML</h2>
             HTML is ...
@@ -58,18 +77,18 @@
         `
     }
 
-    function reducer(state, action){
-        if(state===undefined){
-            return{
-                contents:[
-                    {id:1, title:'HTML1',desc:'HTML is..'},
-                    {id:2, title:'CSS2', desc:'CSS is..'}
+    function reducer(state, action) {
+        if (state === undefined) {
+            return {
+                contents: [
+                    {id: 1, title: 'HTML1', desc: 'HTML is..'},
+                    {id: 2, title: 'CSS2', desc: 'CSS is..'}
                 ]
             }
         }
     }
 
-    var store=Redux.createStore(reducer);
+    var store = Redux.createStore(reducer);
 
     subject();
     TOC();
