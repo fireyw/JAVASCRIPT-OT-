@@ -26,9 +26,10 @@
         while (i < state.contents.length) {
             liTags += `
                     <li>
-                        <!--<a href="${state.contents[i].id}" onclick="detail()">${state.contents[i].title}</a>-->
-                        <div id="${state.contents[i].id}" onclick="detail(${state.contents[i].id})">${state.contents[i].title}</div>
-
+                        <a onclick="event.preventDefault();
+                           var action= {type:'SELECT', id:${state.contents[i].id}}
+                           store.dispatch(action);"
+                        href="${state.contents[i].id}" onclick="detail()">${state.contents[i].title}</a>
                     </li>
                     `;
             i = i + 1;
@@ -40,23 +41,6 @@
             </ol>
         </nav>
         `
-    }
-
-    function detail(id) {
-        console.log('detail click');
-        var state = store.getState();
-
-        for (let i = 1; i < state.contents.length+1; i++) {
-            if (i === id) {
-                console.log('i',i);
-                document.querySelector('#contents').innerHTML = `
-                <article>
-                    <h2>${state.contents[i-1].title}</h2>
-                        ${state.contents[i-1].desc}
-                    </article>
-                    `
-                }
-        }
     }
 
     function control() {
@@ -78,14 +62,22 @@
     }
 
     function reducer(state, action) {
+
         if (state === undefined) {
             return {
+                selected_id:null,
                 contents: [
                     {id: 1, title: 'HTML1', desc: 'HTML is..'},
                     {id: 2, title: 'CSS2', desc: 'CSS is..'}
                 ]
             }
         }
+        if(action.type==="SELECT") {
+            var newState = Object.assign({}, state, {selected_id: action.id});
+        }
+        console.log(action, state, newState);
+
+        return newState;
     }
 
     var store = Redux.createStore(reducer);
