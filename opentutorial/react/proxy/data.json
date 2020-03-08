@@ -1,0 +1,7 @@
+//proxy 사용시 장점
+//1. cors 해결 2. 동일 cookie 사용 3. url 정보 동일 하게 사용
+//적용방법 : package.jspn : proxy 서버 추가
+
+{
+  "result": "ok"
+}
