@@ -62,4 +62,5 @@
         * 저장소(commit)와 index(add)와 로컬 파일 내용을 비교해서 결과 값을 표출
         * index(add)와 tree(commit) 관계 
             * ![index tree working directory 관계](./images/gitStatus.png)
-        * working directory - index, staging area , cache - repository          
+        * working directory - index, staging area , cache - repository
+                  
