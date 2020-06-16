@@ -79,4 +79,5 @@
         * git log --branches --decorate --graph --oneline
         * branch master와 exp차이를 보여줌
             * git log -p master..exp (master엔 없고 exp에 있는것을 보여)
-              
+* git stash
+    * ![git stash ](./images/git-stash-stashing-changes.png)              
