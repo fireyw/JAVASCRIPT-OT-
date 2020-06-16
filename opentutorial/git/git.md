@@ -4,7 +4,7 @@
     * 버전관리를 시작한다는 뜻
     * 너무 많은 소스 변화가 생겨 commit 타이밍이 놓쳤을 경우를 대비하여 add라는 과정을 추가
     * add를 통해 선택된 파일만 commit 할 수 있으며 이것을 커밋 대기 상태(stage area)라고 한
-    * stage area: 커밋 대기인 파일 즉 add 된 영역
+    * stage area: 커밋 대기인 파일 즉 add 된 영
     * repository: 커밋 완료된 파일
 * commit
     * add 상태를 거친 파일만 기록
@@ -56,7 +56,7 @@
     * git commit 원리
         * tree -> parent(이전 커밋) -> tree ->parent(반복)
                 * 즉 commit 시점의 소스를 snapshot(사진을 찍었) 처럼 모든 정보를 가지고 있 
-            * parent: 이전 commit 값으로 이전 commit의 파일이름과 파일 내용을 가지고 있다
+            * parent: 이전 commit 값으로 이전 commit의 파일이름과 파일 내용을 가지고 있
         * 첫번째 commit과 두번째 commit의 tree 값은 다름
     * git status 원리
         * 저장소(commit)와 index(add)와 로컬 파일 내용을 비교해서 결과 값을 표출
