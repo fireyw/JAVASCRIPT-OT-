@@ -79,5 +79,18 @@
         * git log --branches --decorate --graph --oneline
         * branch master와 exp차이를 보여줌
             * git log -p master..exp (master엔 없고 exp에 있는것을 보여)
+    * branch history
+        * git log --branches --graph --decorate --oneline
+            
+            
 * git stash
     * ![git stash ](./images/git-stash-stashing-changes.png)              
+* upstream 
+    * git 로컬과 연결 저장되어있는 원격 저장소를 말함    
+    
+* 원격저장소 원리
+    * 원격저장소를 연결
+        * git remote add origin 주소
+    * 로컬과 지역저장소가 어떤 commit을 가르키는 지는 git config 폴더 안에 기록되어 있      
+        * git log 명령어를 통해 알 수 있다
+            * ex) 로컬과 원격저장소는 같은 커밋을 바라보고 있다(HEAD->master, origin/master)
